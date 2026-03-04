@@ -9,6 +9,10 @@
 
     <script type="text/javascript" src="https://unpkg.com/survey-core/survey.core.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/survey-js-ui/survey-js-ui.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
@@ -21,6 +25,12 @@
 
         .sd-btn--action:hover {
             background-color: var(--sjs-primary-backcolor, var(--primary));
+        }
+
+        code {
+            font-family: monospace;
+            font-weight: lighter;
+            color: #96055c
         }
     </style>
 </head>
@@ -38,7 +48,6 @@
         const prevState = window.localStorage.getItem(STORAGE_ITEM_UI_STATE_KEY) || null;
 
         const survey = new Survey.Model(json);
-        survey.render(document.querySelector("#surveyContainer"));
 
         function saveSurveyData(survey) {
             window.localStorage.setItem(STORAGE_ITEM_DATA_KEY, JSON.stringify(survey.data));
@@ -70,6 +79,17 @@
         });
 
         window.survey = survey;
+
+        const converter = markdownit({
+            html: true
+        });
+
+        survey.onTextMarkdown.add((_, options) => {
+            options.html = converter.renderInline(options.text);
+        });
+
+
+        survey.render(document.querySelector("#surveyContainer"));
 
     </script>
 </body>

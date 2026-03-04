@@ -23,6 +23,7 @@
     },
     {
       "name": "eeabcc1eee5748dcab0d391144181bba",
+      "title": "Your Previous Experience",
       "elements": [
         {
           "type": "boolean",
@@ -82,7 +83,7 @@
         },
         {
           "type": "radiogroup",
-          "name": "question1",
+          "name": "IB Score",
           "visibleIf": "{Most Recent Course} = 'IB-SL' or {Most Recent Course} = 'IB-HL'",
           "title": "What was your score on the IB Computer Science exam?",
           "requiredIf": "{Most Recent Course} = 'IB-SL' or {Most Recent Course} = 'IB-HL'",
@@ -92,17 +93,207 @@
             "3",
             "4",
             "5",
-            {
-              "value": "6",
-              "text": ""
-            },
-            {
-              "value": "7",
-              "text": ""
-            },
+            "6",
+            "7",
             {
               "value": "none",
               "text": "I did not take the exam or I do not have a score."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "6393fa9440ba48139b160e36982cdc70",
+      "title": "Topics and Constructs",
+      "description": "How familiar and comfortable are you with each of the following programming topics/constructs?",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "Variables and assignment statements",
+          "title": "Variables and assignment statements",
+          "choices": [
+            {
+              "value": "0",
+              "text": "I have never heard of this."
+            },
+            {
+              "value": "1",
+              "text": "I have heard of this but don't know what it is or don't understand it."
+            },
+            {
+              "value": "2",
+              "text": "I know what this is but I am not comfortable using it in programming."
+            },
+            {
+              "value": "3",
+              "text": "I am somewhat comfortable using this in programming."
+            },
+            {
+              "value": "4",
+              "text": "I am entirely comfortable using this in programming."
+            }
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "Datatypes",
+          "title": "Datatypes (_e.g._, `int`, `float`, `str`)",
+          "choices": [
+            {
+              "value": "0",
+              "text": "I have never heard of this."
+            },
+            {
+              "value": "1",
+              "text": "I have heard of this but don't know what it is or don't understand it."
+            },
+            {
+              "value": "2",
+              "text": "I know what this is but I am not comfortable using it in programming."
+            },
+            {
+              "value": "3",
+              "text": "I am somewhat comfortable using this in programming."
+            },
+            {
+              "value": "4",
+              "text": "I am entirely comfortable using this in programming."
+            }
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "Conditionals",
+          "title": "Conditionals (_e.g._, `if` and `else`)",
+          "choices": [
+            {
+              "value": "0",
+              "text": "I have never heard of this."
+            },
+            {
+              "value": "1",
+              "text": "I have heard of this but don't know what it is or don't understand it."
+            },
+            {
+              "value": "2",
+              "text": "I know what this is but I am not comfortable using it in programming."
+            },
+            {
+              "value": "3",
+              "text": "I am somewhat comfortable using this in programming."
+            },
+            {
+              "value": "4",
+              "text": "I am entirely comfortable using this in programming."
+            }
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "Loops",
+          "title": "Loops",
+          "choices": [
+            {
+              "value": "0",
+              "text": "I have never heard of this."
+            },
+            {
+              "value": "1",
+              "text": "I have heard of this but don't know what it is or don't understand it."
+            },
+            {
+              "value": "2",
+              "text": "I know what this is but I am not comfortable using it in programming."
+            },
+            {
+              "value": "3",
+              "text": "I am somewhat comfortable using this in programming."
+            },
+            {
+              "value": "4",
+              "text": "I am entirely comfortable using this in programming."
+            }
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "lists",
+          "title": "Lists (or arrays)",
+          "choices": [
+            {
+              "value": "0",
+              "text": "I have never heard of this."
+            },
+            {
+              "value": "1",
+              "text": "I have heard of this but don't know what it is or don't understand it."
+            },
+            {
+              "value": "2",
+              "text": "I know what this is but I am not comfortable using it in programming."
+            },
+            {
+              "value": "3",
+              "text": "I am somewhat comfortable using this in programming."
+            },
+            {
+              "value": "4",
+              "text": "I am entirely comfortable using this in programming."
+            }
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "dictionaries",
+          "title": "Dictionaries (or objects)",
+          "choices": [
+            {
+              "value": "0",
+              "text": "I have never heard of this."
+            },
+            {
+              "value": "1",
+              "text": "I have heard of this but don't know what it is or don't understand it."
+            },
+            {
+              "value": "2",
+              "text": "I know what this is but I am not comfortable using it in programming."
+            },
+            {
+              "value": "3",
+              "text": "I am somewhat comfortable using this in programming."
+            },
+            {
+              "value": "4",
+              "text": "I am entirely comfortable using this in programming."
+            }
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "functions and methods",
+          "title": "Functions and Methods",
+          "choices": [
+            {
+              "value": "0",
+              "text": "I have never heard of this."
+            },
+            {
+              "value": "1",
+              "text": "I have heard of this but don't know what it is or don't understand it."
+            },
+            {
+              "value": "2",
+              "text": "I know what this is but I am not comfortable using it in programming."
+            },
+            {
+              "value": "3",
+              "text": "I am somewhat comfortable using this in programming."
+            },
+            {
+              "value": "4",
+              "text": "I am entirely comfortable using this in programming."
             }
           ]
         }
