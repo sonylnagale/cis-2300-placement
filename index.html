@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CIS 2300 Self-Placement</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://unpkg.com/survey-core/survey-core.min.css" type="text/css" rel="stylesheet">
+
+    <script type="text/javascript" src="https://unpkg.com/survey-core/survey.core.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/survey-js-ui/survey-js-ui.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+        * {
+            --primary: #05336B;
+            --sjs-font-headertitle-color: var(--primary);
+            font-family: "Nunito Sans", sans-serif;
+        }
+
+        .sd-btn--action:hover {
+            background-color: var(--sjs-primary-backcolor, var(--primary));
+        }
+    </style>
+</head>
+
+<body>
+    <div id="surveyContainer"></div>
+
+    <script type="module">
+        import json from "./form.json" with { type: "json" }; // make this standard JS import later
+
+        const STORAGE_ITEM_DATA_KEY = "baruch-cis-self-placement";
+        const STORAGE_ITEM_UI_STATE_KEY = "baruch-cis-self-placement-ui";
+
+        const prevData = window.localStorage.getItem(STORAGE_ITEM_DATA_KEY) || null;
+        const prevState = window.localStorage.getItem(STORAGE_ITEM_UI_STATE_KEY) || null;
+
+        const survey = new Survey.Model(json);
+        survey.render(document.querySelector("#surveyContainer"));
+
+        function saveSurveyData(survey) {
+            window.localStorage.setItem(STORAGE_ITEM_DATA_KEY, JSON.stringify(survey.data));
+        }
+
+        function saveSurveyUIState(survey) {
+            window.localStorage.setItem(STORAGE_ITEM_UI_STATE_KEY, JSON.stringify(survey.uiState));
+        }
+
+        function restoreSurvey(survey) {
+            if (prevData) {
+                const data = JSON.parse(prevData);
+                survey.data = data;
+            }
+            if (prevState) {
+                const state = JSON.parse(prevState);
+                survey.uiState = state;
+            }
+        }
+
+        if (prevData || prevState) {
+            restoreSurvey(survey);
+        }
+
+        survey.onValueChanged.add(saveSurveyData);
+        survey.onUIStateChanged.add(saveSurveyUIState);
+        survey.onCurrentPageChanged.add((survey, options) => {
+            console.log(options);
+        });
+
+        window.survey = survey;
+
+    </script>
+</body>
+
+</html>
