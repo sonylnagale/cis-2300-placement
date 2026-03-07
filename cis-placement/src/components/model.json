@@ -6,8 +6,9 @@
             "elements": [
                 {
                     "type": "html",
-                    "name": "Introdution",
-                    "html": "<p>We're excited that you are interested in taking an introductory computer science course! Our <a target=\"new\" href=\"https://www.cs.washington.edu/academics/undergraduate/non-major-options/#intro-courses\">CSE 121, 122 and 123 programming courses</a> are designed for all students, regardless of how much prior experience you do or do not have and regardless of your goals or reasons for taking the course. In that spirit, we want everyone to take the right first course for them, especially since prior experience can come in many different forms. This self-placement will help you find that course. </p>"
+                    "name": "Introduction",
+                    "html": "<p>We're excited that you are interested in taking an introductory computer science course! Our <a target=\"new\" href=\"https://www.cs.washington.edu/academics/undergraduate/non-major-options/#intro-courses\">CSE 121, 122 and 123 programming courses</a> are designed for all students, regardless of how much prior experience you do or do not have and regardless of your goals or reasons for taking the course. In that spirit, we want everyone to take the right first course for them, especially since prior experience can come in many different forms. This self-placement will help you find that course. </p>",
+                    "class": "reset"
                 }
             ]
         },
@@ -345,7 +346,7 @@
                 {
                     "type": "html",
                     "name": "python1",
-                    "html": "<pre><code class=\"language-python\">def figure(max_num):\n    for line in range(1, max_num + 1):\n        for dots in range(1, max_num - line + 1):\n            print(\".\", end=\"\")\n        print(line)\nfigure(8)</code></pre>"
+                    "html": "<pre><code class=\"language-python hljs\">def figure(max_num):\n    for line in range(1, max_num + 1):\n        for dots in range(1, max_num - line + 1):\n            print(\".\", end=\"\")\n       print(line)\n\n figure(8)</code></pre>"
                 },
                 {
                     "type": "radiogroup",
@@ -362,7 +363,7 @@
                         },
                         {
                             "value": "3",
-                            "text": "<code>null</code>"
+                            "text": "Something else"
                         }
                     ]
                 },
@@ -398,17 +399,26 @@
         },
         {
             "name": "c7c93bb0073d41fb9ee3e3552889aad2",
-            "title": "Placement",
+            "title": "Placement Section A",
             "elements": [
                 {
                     "type": "html",
                     "name": "2300 A",
+                    "title": "2300",
                     "visibleIf": "{Previous Course} = false and {Previous Experience} = false",
                     "html": "<h1><span class=\"badge bg-success\">CIS 2300, Section A</span></h1><p>Since you don't have any previous programming experience, we recommend you take <a target= \"new \" href= \"https://www.cs.washington.edu/academics/undergraduate/non-major-options/#cse121 \">CSE 121</a>. This course will start from the very beginning and will help you learn basic programming skills along with other students with limited experience.</p><p>If you're more interested in using programming as a tool for data analysis and visualization, you might also want to consider <a target= \"new \" href= \"https://www.cs.washington.edu/academics/undergraduate/non-major-options/#cse160 \">CSE 160</a>. This course also does not require any previous experience and focuses on using programming in Python to solve problems using data sets drawn from the sciences, engineering, business and the humanities.</p>"
-                },
+                }
+            ]
+        },
+        {
+            "name": "c7c93bb0073d41fb9ee3e3552889aaccc",
+            "title": "Placement Section B",
+            "elements": [
                 {
                     "type": "html",
                     "name": "2300 B",
+                    "title": "2300",
+                    "visibleIf": "{Previous Course} != false and {Previous Experience} != false",
                     "html": "<h1><span class=\"badge bg-success\">CIS 2300, Section B</span></h1><p>With other experienced students</p>"
                 }
             ]

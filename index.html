@@ -1,24 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 
 <head>
     <title>CIS 2300 Self-Placement</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://unpkg.com/survey-core/survey-core.min.css" type="text/css" rel="stylesheet">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://unpkg.com/survey-core/survey-core.min.css" type="text/css" rel="stylesheet" />
 
     <script type="text/javascript" src="https://unpkg.com/survey-core/survey.core.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/survey-js-ui/survey-js-ui.min.js"></script>
     <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+        @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
 
         * {
-            --primary: #05336B;
+            --primary: #05336b;
             --sjs-font-headertitle-color: var(--primary);
             font-family: "Nunito Sans", sans-serif;
         }
@@ -27,71 +31,88 @@
             background-color: var(--sjs-primary-backcolor, var(--primary));
         }
 
-        code {
+        code,
+        .language-python.hljs span {
             font-family: monospace;
             font-weight: lighter;
-            color: #96055c
+        }
+
+        .header {
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 9999;
+            background: rgba(255, 255, 255);
+            width: 100%;
+            height: 10rem;
+        }
+
+        .sd-progress-buttons__container-center {
+            position: fixed;
+            top: 6rem;
+            width: 100%;
+            z-index: 9999;
+        }
+
+        #surveyContainer {
+            position: absolute;
+            top: 10rem;
+            width: 100%;
+        }
+
+        #bottomToolbar {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            justify-content: center;
+            align-items: center;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.75);
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
+            z-index: 9999;
+        }
+
+        #resetQuizBtn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        #resetQuizBtn:active {
+            transform: translateY(1px);
+        }
+
+        .hidden {
+            visibility: hidden;
         }
     </style>
 </head>
 
 <body>
+    <!-- 
+        We applaud your curiosity! However, looking at the HTML or JavaScript source isn't all that helpful. 
+        This quiz is only intended to help you, so gaming the answers defeats the purpose. 
+    -->
+    <div class="header">
+        <h1>Baruch College Department of Information Systems and Statistics</h1>
+        <h2>Programming Self-Assessment</h2>
+    </div>
+
     <div id="surveyContainer"></div>
 
-    <script type="module">
-        import json from "./form.json" with { type: "json" }; // make this standard JS import later
+    <div id="bottomToolbar" aria-hidden="false" class="hidden">
+        <button id="resetQuizBtn" title="Clear saved answers and restart quiz">
+            Debug: Clear Saved Answers
+        </button>
+    </div>
 
-        const STORAGE_ITEM_DATA_KEY = "baruch-cis-self-placement";
-        const STORAGE_ITEM_UI_STATE_KEY = "baruch-cis-self-placement-ui";
-
-        const prevData = window.localStorage.getItem(STORAGE_ITEM_DATA_KEY) || null;
-        const prevState = window.localStorage.getItem(STORAGE_ITEM_UI_STATE_KEY) || null;
-
-        const survey = new Survey.Model(json);
-
-        function saveSurveyData(survey) {
-            window.localStorage.setItem(STORAGE_ITEM_DATA_KEY, JSON.stringify(survey.data));
-        }
-
-        function saveSurveyUIState(survey) {
-            window.localStorage.setItem(STORAGE_ITEM_UI_STATE_KEY, JSON.stringify(survey.uiState));
-        }
-
-        function restoreSurvey(survey) {
-            if (prevData) {
-                const data = JSON.parse(prevData);
-                survey.data = data;
-            }
-            if (prevState) {
-                const state = JSON.parse(prevState);
-                survey.uiState = state;
-            }
-        }
-
-        if (prevData || prevState) {
-            restoreSurvey(survey);
-        }
-
-        survey.onValueChanged.add(saveSurveyData);
-        survey.onUIStateChanged.add(saveSurveyUIState);
-        survey.onCurrentPageChanged.add((survey, options) => {
-            console.log(options);
-        });
-
-        window.survey = survey;
-
-        const converter = markdownit({
-            html: true
-        });
-
-        survey.onTextMarkdown.add((_, options) => {
-            options.html = converter.renderInline(options.text);
-        });
-
-
-        survey.render(document.querySelector("#surveyContainer"));
-
-    </script>
+    <script type="module" src="./script.js"></script>
 </body>
 
 </html>
