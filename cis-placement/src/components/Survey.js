@@ -2,18 +2,18 @@
 
 import "@/app/globals.css";
 
-import { useState, useEffect } from 'react';
-import { Model, Serializer, settings, QuestionHtmlModel, registerFunction } from 'survey-core';
+import { useState, useEffect, useRef } from 'react';
+
+import { Model, settings, QuestionHtmlModel, registerFunction } from 'survey-core';
 import { Survey } from 'survey-react-ui';
 
 import hljs from 'highlight.js';
 import 'highlight.js/styles/github-dark.css';
 import python from 'highlight.js/lib/languages/python';
 import MarkdownIt from 'markdown-it';
-
 import model from './model.json';
 
-import "@/components/survey.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 hljs.registerLanguage('python', python);
@@ -21,21 +21,13 @@ hljs.registerLanguage('python', python);
 export default function SurveyComponent() {
   const [survey] = useState(new Model(model));
 
-  function calculateExamScore(data) {
+  const shadowHost = useRef(null);
+
+
+  function calculateStatus(data) {
     let totalScore = 0;
     data.forEach((item) => {
-      if (item !== undefined) {
-        totalScore += item;
-      }
-    });
-
-    return totalScore;
-  }
-
-  function calculateConcepts(data) {
-    let totalScore = 0;
-    data.forEach((item) => {
-      if (item == undefined) {
+      if (item === undefined) {
         return -1;
       }
 
@@ -48,13 +40,8 @@ export default function SurveyComponent() {
   }
 
   registerFunction({
-    name: "calculateExamScore",
-    func: calculateExamScore
-  });
-
-  registerFunction({
-    name: "calculateConcepts",
-    func: calculateConcepts
+    name: "calculateStatus",
+    func: calculateStatus
   });
 
   settings.triggers.executeSkipOnValueChanged = false;
@@ -172,5 +159,5 @@ export default function SurveyComponent() {
 
 
 
-  return <Survey model={survey} className="survey" />;
+  return <Survey model={survey} className="survey"></Survey>;
 }
