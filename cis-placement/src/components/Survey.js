@@ -3,7 +3,7 @@
 import "@/app/globals.css";
 
 import { useState, useEffect } from 'react';
-import { Model, Serializer, settings, QuestionHtmlModel } from 'survey-core';
+import { Model, Serializer, settings, QuestionHtmlModel, registerFunction } from 'survey-core';
 import { Survey } from 'survey-react-ui';
 
 import hljs from 'highlight.js';
@@ -21,6 +21,44 @@ hljs.registerLanguage('python', python);
 export default function SurveyComponent() {
   const [survey] = useState(new Model(model));
 
+  function calculateExamScore(data) {
+    let totalScore = 0;
+    data.forEach((item) => {
+      if (item !== undefined) {
+        totalScore += item;
+      }
+    });
+
+    return totalScore;
+  }
+
+  function calculateConcepts(data) {
+    let totalScore = 0;
+    data.forEach((item) => {
+      if (item == undefined) {
+        return -1;
+      }
+
+      totalScore += item;
+    });
+
+    console.log(totalScore)
+
+    return totalScore;
+  }
+
+  registerFunction({
+    name: "calculateExamScore",
+    func: calculateExamScore
+  });
+
+  registerFunction({
+    name: "calculateConcepts",
+    func: calculateConcepts
+  });
+
+  settings.triggers.executeSkipOnValueChanged = false;
+
   useEffect(() => {
     const converter = MarkdownIt({
       html: true,
@@ -37,9 +75,8 @@ export default function SurveyComponent() {
       }
     });
 
-
     survey.onCurrentPageChanged.add((_, options) => {
-      window.location.hash = options.newCurrentPage.jsonObj.name;
+      // window.location.hash = options.newCurrentPage.jsonObj.name;
       survey.currentPage.elementsValue.forEach(async (el) => {
         // make sure the code questions get a fresh highlight when visible
         if (el instanceof QuestionHtmlModel) {
@@ -53,21 +90,20 @@ export default function SurveyComponent() {
       });
     });
 
-    settings.triggers.executeSkipOnValueChanged = false;
 
-    if (window.location.hash !== '') {
-      const pageIndex = survey.pages.findIndex(p => p.name === window.location.hash.replace('#', ''));
-      survey.currentPageNo = pageIndex;
+    // if (window.location.hash !== '') {
+    //   const pageIndex = survey.pages.findIndex(p => p.name === window.location.hash.replace('#', ''));
+    //   survey.currentPageNo = pageIndex;
 
-      if (prevData) {
-        const data = JSON.parse(prevData);
-        survey.data = data;
-      }
-      if (prevState) {
-        const state = JSON.parse(prevState);
-        survey.uiState = state;
-      }
-    }
+    //   if (prevData) {
+    //     const data = JSON.parse(prevData);
+    //     survey.data = data;
+    //   }
+    //   if (prevState) {
+    //     const state = JSON.parse(prevState);
+    //     survey.uiState = state;
+    //   }
+    // }
 
     survey.onValueChanged.add(saveData);
     survey.onUIStateChanged.add(saveData);
@@ -103,10 +139,6 @@ export default function SurveyComponent() {
     );
   }
 
-  Serializer.addProperty("itemvalue", {
-    name: "score:number"
-  });
-
   const STORAGE_ITEM_DATA_KEY = "baruch-cis-self-placement";
   const STORAGE_ITEM_UI_STATE_KEY = "baruch-cis-self-placement-ui";
 
@@ -137,6 +169,8 @@ export default function SurveyComponent() {
       survey.uiState = state;
     }
   }
+
+
 
   return <Survey model={survey} className="survey" />;
 }

@@ -72,29 +72,23 @@
                     "requiredIf": "{Most Recent Course} = 'AP-A'",
                     "choices": [
                         {
-                            "value": "1",
-                            "score": "0"
+                            "value": "1"
                         },
                         {
-                            "value": "2",
-                            "score": "0"
+                            "value": "2"
                         },
                         {
-                            "value": "3",
-                            "score": "3"
+                            "value": "3"
                         },
                         {
-                            "value": "4",
-                            "score": "4"
+                            "value": "4"
                         },
                         {
-                            "value": "5",
-                            "score": "5"
+                            "value": "5"
                         },
                         {
-                            "value": "none",
-                            "text": "I did not take the exam or I do not have a score.",
-                            "score": "0"
+                            "value": "0",
+                            "text": "I did not take the exam or I do not have a score."
                         }
                     ]
                 },
@@ -106,45 +100,44 @@
                     "requiredIf": "{Most Recent Course} = 'IB-SL' or {Most Recent Course} = 'IB-HL'",
                     "choices": [
                         {
-                            "value": "1",
-                            "score": "0"
+                            "value": "1"
                         },
                         {
-                            "value": "2",
-                            "score": "0"
+                            "value": "2"
                         },
                         {
-                            "value": "3",
-                            "score": "0"
+                            "value": "3"
                         },
                         {
-                            "value": "4",
-                            "score": "4"
+                            "value": "4"
                         },
                         {
-                            "value": "5",
-                            "score": "5"
+                            "value": "5"
                         },
                         {
-                            "value": "6",
-                            "score": "6"
+                            "value": "6"
                         },
                         {
-                            "value": "7",
-                            "score": "7"
+                            "value": "7"
                         },
                         {
                             "value": "none",
-                            "text": "I did not take the exam or I do not have a score.",
-                            "score": "0"
+                            "text": "I did not take the exam or I do not have a score."
                         }
                     ]
+                },
+                {
+                    "type": "expression",
+                    "name": "experience_n",
+                    "expression": "calculateExamScore({AP CS A Score},{IB Score})",
+                    "visible": false
                 }
             ]
         },
         {
             "name": "6393fa9440ba48139b160e36982cdc70",
             "title": "Topics and Constructs",
+            "visibleIf": "{experience_n} > 3",
             "description": "How familiar and comfortable are you with each of the following programming topics/constructs?",
             "elements": [
                 {
@@ -335,12 +328,19 @@
                             "text": "I am entirely comfortable using this in programming."
                         }
                     ]
+                },
+                {
+                    "type": "expression",
+                    "name": "concepts_n",
+                    "visible": false,
+                    "expression": "calculateConcepts({Variables and assignment statements}, {functions and methods}, {dictionaries}, {Datatypes}, {Conditionals}, {Loops}, {lists}, {dictionaries}, {functions and methods})"
                 }
             ]
         },
         {
             "name": "a684c16fac35458fb551ef5262066485",
             "title": "Code Assessment",
+            "visibleIf": "{experience_n} > 3 and {concepts_n} > 30",
             "description": "Given the following code, answer the following questions:",
             "elements": [
                 {
@@ -403,16 +403,39 @@
             "elements": [
                 {
                     "type": "html",
-                    "name": "2300 A",
+                    "name": "2300 A1",
                     "title": "2300",
-                    "visibleIf": "{Previous Course} = false and {Previous Experience} = false",
                     "html": "<h1><span class=\"badge bg-success\">CIS 2300, Section A</span></h1><p>Since you don't have any previous programming experience, we recommend you take <a target= \"new \" href= \"https://www.cs.washington.edu/academics/undergraduate/non-major-options/#cse121 \">CSE 121</a>. This course will start from the very beginning and will help you learn basic programming skills along with other students with limited experience.</p><p>If you're more interested in using programming as a tool for data analysis and visualization, you might also want to consider <a target= \"new \" href= \"https://www.cs.washington.edu/academics/undergraduate/non-major-options/#cse160 \">CSE 160</a>. This course also does not require any previous experience and focuses on using programming in Python to solve problems using data sets drawn from the sciences, engineering, business and the humanities.</p>"
+                },
+                {
+                    "type": "expression",
+                    "name": "complete",
+                    "expression": "true",
+                    "visible": true
+                }
+            ]
+        },
+        {
+            "name": "c7c93bb0073d41fb9ee3e3552889aad2",
+            "title": "Placement Section A",
+            "elements": [
+                {
+                    "type": "html",
+                    "name": "2300 A2",
+                    "title": "2300",
+                    "html": "<h1><span class=\"badge bg-success\">CIS 2300, Section A</span></h1><p>Since your programming experience is limited, we recommend you take <a target= \"new \" href= \"https://www.cs.washington.edu/academics/undergraduate/non-major-options/#cse121 \">CSE 121</a>. This course will start from the very beginning and will help you learn basic programming skills along with other students with limited experience.</p><p>If you're more interested in using programming as a tool for data analysis and visualization, you might also want to consider <a target= \"new \" href= \"https://www.cs.washington.edu/academics/undergraduate/non-major-options/#cse160 \">CSE 160</a>. This course also does not require any previous experience and focuses on using programming in Python to solve problems using data sets drawn from the sciences, engineering, business and the humanities.</p>"
+                },
+                {
+                    "type": "expression",
+                    "name": "complete",
+                    "expression": "true"
                 }
             ]
         },
         {
             "name": "c7c93bb0073d41fb9ee3e3552889aaccc",
             "title": "Placement Section B",
+            "visibleIf": "{complete} != true",
             "elements": [
                 {
                     "type": "html",
@@ -420,6 +443,12 @@
                     "title": "2300",
                     "visibleIf": "{Previous Course} != false and {Previous Experience} != false",
                     "html": "<h1><span class=\"badge bg-success\">CIS 2300, Section B</span></h1><p>With other experienced students</p>"
+                },
+                {
+                    "type": "expression",
+                    "name": "complete",
+                    "expression": "true",
+                    "visible": true
                 }
             ]
         }
@@ -430,7 +459,23 @@
         {
             "type": "skip",
             "expression": "{Previous Course} = false and {Previous Experience} = false",
-            "gotoName": "2300 A"
+            "gotoName": "2300 A1"
+        },
+        {
+            "type": "skip",
+            "expression": "{experience_n} != 0 and {experience_n} < 3",
+            "gotoName": "2300 A2"
+        },
+
+        {
+            "type": "skip",
+            "expression": "{concepts_n} != 0 and {concepts_n} < 25",
+            "gotoName": "2300 A2"
+        },
+        {
+            "type": "complete",
+            "expression":"{complete} = true"
         }
-    ]
+    ],
+    "completedHtml": "<h1>Contact CIS</h1>"
 }
