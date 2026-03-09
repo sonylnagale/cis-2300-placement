@@ -52,8 +52,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
-          cache-dependency-path: cis-placement/yarn.lock
+          cache: yarn
+          cache-dependency-path: ./cis-placement/yarn.lock
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
@@ -62,6 +62,7 @@ jobs:
           #
           # You may remove this line if you want to manage the configuration yourself.
           static_site_generator: next
+          working-directory: ./cis-placement
       - name: Restore cache
         uses: actions/cache@v4
         with:
@@ -74,7 +75,9 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+        working-directory: ./cis-placement
       - name: Build with Next.js
+        working-directory: ./cis-placement
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
