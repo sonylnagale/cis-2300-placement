@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Path
-        run: echo $GITHUB_WORKSPACE + "/cis-placement" >> $GITHUB_WORKSPACE
+        run: echo $GITHUB_PATH + "/cis-placement" >> $GITHUB_PATH
       - name: Checkout
         uses: actions/checkout@v4
       - name: Detect package manager
