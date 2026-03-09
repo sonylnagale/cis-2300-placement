@@ -1,0 +1,78 @@
+flowchart TD
+  Start([Start])
+  page1_introduction["page1:Introduction"]
+  page2_introduction_2["page2:Introduction 2"]
+  page3_your_previous_experience["page3:Your Previous Experience"]
+  page4_advanced_placement_courses["page4:Advanced Placement Courses"]
+  page5_your_previous_experience["page5:Your Previous Experience"]
+  page6_topics_and_constructs["page6:Topics and Constructs"]
+  page7_code_assessment["page7:Code Assessment"]
+  page8_placement_section_a["page8:Placement Section A"]
+  page9_placement_section_a["page9:Placement Section A"]
+  page10_placement_section_a["page10:Placement Section A"]
+  page11_placement_section_b["page11:Placement Section B"]
+  page12_thank_you["page12:Thank You"]
+  Start --> page1_introduction
+  page1_introduction --> page2_introduction_2
+  page2_introduction_2 --> page3_your_previous_experience
+  dec_3{"(#Previous AP IB Course) = true"}
+  page3_your_previous_experience --> dec_3
+  dec_3_yes["yes"]
+  dec_3_no["no"]
+  dec_3 --> dec_3_yes
+  dec_3_yes --> page4_advanced_placement_courses
+  dec_3 --> dec_3_no
+  dec_3_no --> page5_your_previous_experience
+  page4_advanced_placement_courses --> page5_your_previous_experience
+  dec_5{"(state) > 2"}
+  page5_your_previous_experience --> dec_5
+  dec_5_yes["yes"]
+  dec_5_no["no"]
+  dec_5 --> dec_5_yes
+  dec_5_yes --> page6_topics_and_constructs
+  dec_5 --> dec_5_no
+  dec_5_no --> page7_code_assessment
+  dec_6{"(state) > 4"}
+  page6_topics_and_constructs --> dec_6
+  dec_6_yes["yes"]
+  dec_6_no["no"]
+  dec_6 --> dec_6_yes
+  dec_6_yes --> page7_code_assessment
+  dec_6 --> dec_6_no
+  dec_6_no --> page8_placement_section_a
+  dec_7{"(state) <= 1"}
+  page7_code_assessment --> dec_7
+  dec_7_yes["yes"]
+  dec_7_no["no"]
+  dec_7 --> dec_7_yes
+  dec_7_yes --> page8_placement_section_a
+  dec_7 --> dec_7_no
+  dec_7_no --> page9_placement_section_a
+  dec_8{"(state) > 1 and (state) < 3"}
+  page8_placement_section_a --> dec_8
+  dec_8_yes["yes"]
+  dec_8_no["no"]
+  dec_8 --> dec_8_yes
+  dec_8_yes --> page9_placement_section_a
+  dec_8 --> dec_8_no
+  dec_8_no --> page10_placement_section_a
+  dec_9{"(state) >= 3 and (state) <= 5"}
+  page9_placement_section_a --> dec_9
+  dec_9_yes["yes"]
+  dec_9_no["no"]
+  dec_9 --> dec_9_yes
+  dec_9_yes --> page10_placement_section_a
+  dec_9 --> dec_9_no
+  dec_9_no --> page11_placement_section_b
+  dec_10{"(state) > 6"}
+  page10_placement_section_a --> dec_10
+  dec_10_yes["yes"]
+  dec_10_no["no"]
+  dec_10 --> dec_10_yes
+  dec_10_yes --> page11_placement_section_b
+  dec_10 --> dec_10_no
+  dec_10_no --> page12_thank_you
+  page11_placement_section_b --> page12_thank_you
+  page12_thank_you --> Finish([Finish])
+  style Start fill:#f9f,stroke:#333,stroke-width:1px
+  style Finish fill:#9f9,stroke:#333,stroke-width:1px

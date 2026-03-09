@@ -4,7 +4,7 @@ import "@/app/globals.css";
 
 import { useState, useEffect, useRef } from 'react';
 
-import { Model, settings, QuestionHtmlModel, registerFunction } from 'survey-core';
+import { Model, QuestionHtmlModel, registerFunction, Serializer } from 'survey-core';
 import { Survey } from 'survey-react-ui';
 
 import hljs from 'highlight.js';
@@ -19,32 +19,112 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 hljs.registerLanguage('python', python);
 
 export default function SurveyComponent() {
-  const [survey] = useState(new Model(model));
 
-  const shadowHost = useRef(null);
+  function calculateConceptsScore(data) {
+    if (data[0] !== "Concepts")
+      return;
 
+    data.shift(); // remove the "Concepts" label
 
-  function calculateStatus(data) {
     let totalScore = 0;
     data.forEach((item) => {
-      if (item === undefined) {
-        return -1;
-      }
-
-      totalScore += item;
+      if (item > 2)
+        totalScore += +item;
     });
 
-    console.log(totalScore)
+    if (totalScore >= 10)
+      return true;
 
-    return totalScore;
+    return false;
+  }
+
+  function calculateExamplesScore(data) {
+    if (data[0] !== "Examples")
+      return;
+
+    data.shift(); // remove the "Examples" label
+
+    let totalScore = 0;
+    let totalComfort = 0;
+    data.forEach((item, i) => {
+      if (i % 2 === 0) {
+        totalScore += +item;
+      } else {
+        totalComfort += +item;
+      }
+    });
+
+    totalScore += totalComfort;
+    if (totalScore >= 10)
+      return true;
+
+    return false;
+  }
+
+  function determineState(data) {
+    const [course, apcourse, previousExperience, apScore, ibScore, conceptsScore, examplesScore] = data;
+
+    let state = 0;
+    let AP_or_IB = false;
+    let courseTaken = false;
+
+    if (course === true) {
+      state = 1;
+      courseTaken = true;
+    }
+
+    if (apcourse !== false) {
+      if ((+apScore || 0) + (+ibScore || 0) > 3) {
+        state += 1; // <= 2
+        AP_or_IB = true;
+      }
+    }
+
+    if (previousExperience === true) {
+      if (AP_or_IB) {
+        state += 2; // >= 3
+      } else {
+        state = 3; // 3
+      }
+    }
+
+    if (conceptsScore === true) {
+      state += 2; // >= 2
+    } else {
+      state += 1;
+    }
+
+    if (examplesScore === true) {
+      state += 1; // >= 3
+    }
+
+
+    console.log("Determined state: ", state);
+
+    return `${state}`;
+
+    // if (conceptsScore === true && examplesScore === true) {
+    //   return '2';
+    // }
+    // return false;
   }
 
   registerFunction({
-    name: "calculateStatus",
-    func: calculateStatus
+    name: "calculateConceptsScore",
+    func: calculateConceptsScore
   });
 
-  settings.triggers.executeSkipOnValueChanged = false;
+  registerFunction({
+    name: "calculateExamplesScore",
+    func: calculateExamplesScore
+  });
+
+  registerFunction({
+    name: "determineState",
+    func: determineState
+  });
+
+  const [survey] = useState(new Model(model));
 
   useEffect(() => {
     const converter = MarkdownIt({
@@ -76,21 +156,6 @@ export default function SurveyComponent() {
         }
       });
     });
-
-
-    // if (window.location.hash !== '') {
-    //   const pageIndex = survey.pages.findIndex(p => p.name === window.location.hash.replace('#', ''));
-    //   survey.currentPageNo = pageIndex;
-
-    //   if (prevData) {
-    //     const data = JSON.parse(prevData);
-    //     survey.data = data;
-    //   }
-    //   if (prevState) {
-    //     const state = JSON.parse(prevState);
-    //     survey.uiState = state;
-    //   }
-    // }
 
     survey.onValueChanged.add(saveData);
     survey.onUIStateChanged.add(saveData);
@@ -156,8 +221,6 @@ export default function SurveyComponent() {
       survey.uiState = state;
     }
   }
-
-
 
   return <Survey model={survey} className="survey"></Survey>;
 }

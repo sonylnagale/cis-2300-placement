@@ -1,0 +1,50 @@
+flowchart TD
+  Start([Start])
+  introduction["Introduction"]
+  background["Background"]
+  your_previous_experience["Your Previous Experience"]
+  advanced_placement_courses["Advanced Placement Courses"]
+  your_previous_experience["Your Previous Experience"]
+  topics_and_constructs["Topics and Constructs"]
+  code_assessment["Code Assessment"]
+  placement_section_a["Placement Section A"]
+  placement_section_a["Placement Section A"]
+  placement_section_a["Placement Section A"]
+  placement_section_b["Placement Section B"]
+  thank_you["Thank You"]
+  Start --> introduction
+  introduction --> background
+  background --> your_previous_experience
+  dec_3{"(#Previous AP IB Course) = true"}
+  your_previous_experience --> dec_3
+  dec_3 --|yes| advanced_placement_courses
+  dec_3 --|no| your_previous_experience
+  advanced_placement_courses --> your_previous_experience
+  dec_5{"(state) > 2"}
+  your_previous_experience --> dec_5
+  dec_5 --|yes| topics_and_constructs
+  dec_5 --|no| code_assessment
+  dec_6{"(state) > 4"}
+  topics_and_constructs --> dec_6
+  dec_6 --|yes| code_assessment
+  dec_6 --|no| placement_section_a
+  dec_7{"(state) <= 1"}
+  code_assessment --> dec_7
+  dec_7 --|yes| placement_section_a
+  dec_7 --|no| placement_section_a
+  dec_8{"(state) > 1 and (state) < 3"}
+  placement_section_a --> dec_8
+  dec_8 --|yes| placement_section_a
+  dec_8 --|no| placement_section_a
+  dec_9{"(state) >= 3 and (state) <= 5"}
+  placement_section_a --> dec_9
+  dec_9 --|yes| placement_section_a
+  dec_9 --|no| placement_section_b
+  dec_10{"(state) > 6"}
+  placement_section_a --> dec_10
+  dec_10 --|yes| placement_section_b
+  dec_10 --|no| thank_you
+  placement_section_b --> thank_you
+  thank_you --> Finish([Finish])
+  style Start fill:#f9f,stroke:#333,stroke-width:1px
+  style Finish fill:#9f9,stroke:#333,stroke-width:1px

@@ -6,9 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test:e2e": "playwright test",
-    "test:e2e:headed": "playwright test --headed",
-    "playwright:install": "playwright install"
+    "postflowchart:generate": "npx @mermaid-js/mermaid-cli -i diagrams/flowchart.mmd -o public/flowchart.svg",
+    "flowchart:generate": "node scripts/generate-flowchart.js",
+    "test": "playwright test",
+    "test:screenshots": "SCREENSHOTS=true playwright test"
   },
   "devDependencies": {
     "@playwright/test": "^1.44.0"

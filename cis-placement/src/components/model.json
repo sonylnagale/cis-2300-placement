@@ -2,57 +2,58 @@
     "title": "",
     "pages": [
         {
-            "name": "bf025d64962f4e10892a2574f471ecc4",
+            "name": "page1",
+            "title": "Introduction",
             "elements": [
                 {
                     "type": "html",
                     "name": "Introduction",
-                    "html": "<p>We're excited that you are interested in taking an introductory computer science course! Our <a target=\"new\" href=\"https://www.cs.washington.edu/academics/undergraduate/non-major-options/#intro-courses\">CSE 121, 122 and 123 programming courses</a> are designed for all students, regardless of how much prior experience you do or do not have and regardless of your goals or reasons for taking the course. In that spirit, we want everyone to take the right first course for them, especially since prior experience can come in many different forms. This self-placement will help you find that course. </p>",
+                    "html": "<h2>Welcome!</h2><p>We're excited that you are interested in taking an introductory Computer Information Systems course! Our <a target=\"_blank\" href=\"https://baruch-undergraduate.catalog.cuny.edu/courses/1473721\">CIS 2300 programming course</a> is designed for all students, regardless of how much prior experience you do or do not have and regardless of your goals or reasons for taking the course. In that spirit, we want everyone to have the best experience in your first course, especially since prior experience can come in many different forms. It can be intimidating to be in a class full of students with prior experience, and conversely being seasoned in a room of beginners. Since we offer multiple sections of 2300, this anonymous self-placement will suggest the most appropriate section for you.</p>",
                     "class": "reset"
                 }
             ]
         },
         {
-            "name": "bf3a746e0bb1438fa945a6c00cb6d7d7",
+            "name": "page2",
+            "title": "Introduction 2",
             "elements": [
                 {
                     "type": "html",
                     "name": "Background",
-                    "html": "<p>If you have never programmed before, or if your programming experience is limited, you will probably begin with CSE 121, which is designed for students with no previous experience whatsoever. If you took a high-school programming course intended to be similar to a first college course, like AP Computer Science A or IB Computer Science, you will probably start with CSE 122. If you have substantial previous experience you might even want to enroll in CSE 123. This guided self-placement will help you make this decision by asking you questions about your background. These will include questions about the specific courses and experience you have, how familiar you are with various topics and concepts, and how comfortable you are solving practice problems. We hope this will help most people pick the right course for them, but if you still have questions at the end, you can always contact our helpful <a href=\"mailto:course-placement@cs.washington.edu?subject=CSE 12X Self-Placement Question\">course placement  advising team</a> for more support. </p> <p> This self-placement is <em>adaptive</em>, meaning which questions you see and in which order will depend on your responses. So each student will have a slightly different experience, and if you go back and change your answers, you may see different questions appear. This is to help make sure we get the information that will most help us recommend the best course for you. As you go through the self-placement, you may also encounter terms or concepts you haven't heard of before. Don't be intimidated-- if you haven't seen a topic or concept, that just means you should probably be in the course that teaches it! We encourage you to answer all questions as truthfully as possible based on your <em>current</em> experience. </p>  <p>When you're ready, click the button below to begin.</p>"
+                    "html": "<p>If you have never programmed before, or if your programming experience is limited, you will be placed in a cohort of similarly new students, designed for students with no previous experience whatsoever. If you took a high-school programming course intended to be similar to a first college course, like AP Computer Science A or IB Computer Science, we will suggest a section of CIS 2300 geared towards those with experience. This guided self-placement will help suggest the best section for you by asking you questions about your background. These will include questions about the specific courses and experience you have, how familiar you are with various topics and concepts, and how comfortable you are solving practice problems. We hope this will help most people have the right experience, but if you still have questions at the end, you can always contact us at <a href=\"mailto:informationsystemsandstatistics@baruch.cuny.edu?subject=CIS 2300 Self-Placement Question\">informationsystemsandstatistics@baruch.cuny.edu</a> for more support. </p> <p> This self-placement is <em>adaptive</em>, meaning which questions you see and in which order will depend on your responses, so each student will have a slightly different experience, and if you go back and change your answers, you may see different questions appear. This is to help make sure we get the information that will most help us recommend the best course for you. As you go through the self-placement, you may also encounter terms or concepts you haven't heard of before. Don't be intimidated—if you haven't seen a topic or concept before, that just means you should probably be in the section that teaches it! We encourage you to answer all questions as truthfully as possible based on your <em>current</em> experience. </p> <p>While CIS 2300 is taught in Python, you may have experience in other languages. Most concepts translate from one language to others, so be aware that some terms may be different.</p> <p>When you're ready, click the button below to begin.</p>"
                 }
             ]
         },
         {
-            "name": "eeabcc1eee5748dcab0d391144181bba",
+            "name": "page3",
             "title": "Your Previous Experience",
             "elements": [
                 {
                     "type": "boolean",
                     "name": "Previous Course",
                     "title": "Have you taken a previous computer science course?",
-                    "isRequired": true,
                     "defaultValue": null
                 },
                 {
                     "type": "boolean",
-                    "name": "Previous Experience",
-                    "visibleIf": "{#Previous Course} = false",
-                    "title": "Do you have previous programming experience outside of a course?",
-                    "isRequired": true,
+                    "name": "Previous AP IB Course",
+                    "title": "Have you taken an AP or IB course?",
+                    "visibleIf": "{#Previous Course} notempty",
                     "defaultValue": null
-                },
-                {
-                    "type": "expression",
-                    "name": "done_1",
-                    "expression": "{#Previous Course} = false and {#Previous Experience} = false",
-                    "visible": true
-                },
+                }
+            ]
+        },
+        {
+            "name": "page4",
+            "title": "Advanced Placement Courses",
+            "visibleIf": "{#Previous AP IB Course} = true",
+            "elements": [
                 {
                     "type": "radiogroup",
                     "name": "Most Recent Course",
-                    "visibleIf": "{Previous Course} = true",
-                    "title": "What is the most recent computer science course you have completed?",
-                    "requiredIf": "{Previous Course} = true",
+                    "visibleIf": "{#Previous AP IB Course} = true",
+                    "title": "Which AP or IB course did you complete?",
+                    "requiredIf": "{#Previous AP IB Course} = true",
                     "choices": [
                         {
                             "value": "AP-A",
@@ -80,22 +81,22 @@
                     "requiredIf": "{Most Recent Course} = 'AP-A'",
                     "choices": [
                         {
-                            "value": "1"
+                            "value": 1
                         },
                         {
-                            "value": "2"
+                            "value": 2
                         },
                         {
-                            "value": "3"
+                            "value": 3
                         },
                         {
-                            "value": "4"
+                            "value": 4
                         },
                         {
-                            "value": "5"
+                            "value": 5
                         },
                         {
-                            "value": "0",
+                            "value": 0,
                             "text": "I did not take the exam or I do not have a score."
                         }
                     ]
@@ -108,55 +109,56 @@
                     "requiredIf": "{Most Recent Course} = 'IB-SL' or {Most Recent Course} = 'IB-HL'",
                     "choices": [
                         {
-                            "value": "1"
+                            "value": 1
                         },
                         {
-                            "value": "2"
+                            "value": 2
                         },
                         {
-                            "value": "3"
+                            "value": 3
                         },
                         {
-                            "value": "4"
+                            "value": 4
                         },
                         {
-                            "value": "5"
+                            "value": 5
                         },
                         {
-                            "value": "6"
+                            "value": 6
                         },
                         {
-                            "value": "7"
+                            "value": 7
                         },
                         {
-                            "value": "none",
+                            "value": 0,
                             "text": "I did not take the exam or I do not have a score."
                         }
                     ]
-                },
-                {
-                    "type": "expression",
-                    "name": "experience_n",
-                    "expression": "{AP CS A Score} + {IB Score}",
-                    "visible": false
-                },
-                {
-                    "type": "expression",
-                    "name": "done_2",
-                    "expression": "{experience_n} > 0 and {experience_n} <= 3",
-                    "visible": false
                 }
             ]
         },
         {
-            "name": "6393fa9440ba48139b160e36982cdc70",
+            "name": "page5",
+            "title": "Your Previous Experience",
+            "elements": [
+                {
+                    "type": "boolean",
+                    "name": "Previous Experience",
+                    "title": "Do you have previous programming experience outside of a course?",
+                    "isRequired": false,
+                    "defaultValue": null
+                }
+            ]
+        },
+        {
+            "name": "page6",
             "title": "Topics and Constructs",
-            "visibleIf": "{experience_n} > 3",
+            "visibleIf": "{state} > 2",
             "description": "How familiar and comfortable are you with each of the following programming topics/constructs?",
             "elements": [
                 {
                     "type": "radiogroup",
-                    "name": "Variables and assignment statements",
+                    "name": "vars",
                     "title": "Variables and assignment statements",
                     "choices": [
                         {
@@ -254,11 +256,13 @@
                         },
                         {
                             "value": "3",
-                            "text": "I am somewhat comfortable using this in programming."
+                            "text": "I am somewhat comfortable using this in programming.",
+                            "val": 2
                         },
                         {
                             "value": "4",
-                            "text": "I am entirely comfortable using this in programming."
+                            "text": "I am entirely comfortable using this in programming.",
+                            "val": 4
                         }
                     ]
                 },
@@ -346,15 +350,16 @@
                 {
                     "type": "expression",
                     "name": "concepts_n",
+                    "expression": "calculateConceptsScore(\"Concepts\", {$vars}, {Datatypes}, {Conditionals}, {Loops}, {lists}, {dictionaries}, {functions and methods})",
                     "visible": false,
-                    "expression": "calculateConcepts({Variables and assignment statements}, {functions and methods}, {dictionaries}, {Datatypes}, {Conditionals}, {Loops}, {lists}, {dictionaries}, {functions and methods})"
+                    "defaultValue": null
                 }
             ]
         },
         {
-            "name": "a684c16fac35458fb551ef5262066485",
+            "name": "page7",
             "title": "Code Assessment",
-            "visibleIf": "{experience_n} > 3 and {concepts_n} > 30",
+            "visibleIf": "{state} > 4",
             "description": "Given the following code, answer the following questions:",
             "elements": [
                 {
@@ -368,15 +373,15 @@
                     "title": "What is the output?",
                     "choices": [
                         {
-                            "value": "1",
+                            "value": "0",
                             "text": "<code>.......1<br/>......2<br/>.....3<br/>....4<br/>...5<br/>..6<br/>.7<br/>8</code>"
                         },
                         {
-                            "value": "2",
+                            "value": "10",
                             "text": "<code>.......8<br/>......7<br/>.....6<br/>....5<br/>...4<br/>..3<br/>.2<br/>1</code>"
                         },
                         {
-                            "value": "3",
+                            "value": "-1",
                             "text": "Something else"
                         }
                     ]
@@ -388,93 +393,136 @@
                     "title": "Which of the following best describes your experience with the preceding problem?",
                     "choices": [
                         {
-                            "value": "1",
+                            "value": "-10",
                             "text": "I did not understand the problem or did not know how to begin solving it."
                         },
                         {
-                            "value": "2",
+                            "value": "-5",
                             "text": "I was able to begin solving the problem but got stuck."
                         },
                         {
-                            "value": "3",
+                            "value": "-2",
                             "text": "I was able to complete the problem but struggled greatly."
                         },
                         {
-                            "value": "4",
+                            "value": "0",
                             "text": "I was able to solve the problem with a little difficulty."
                         },
                         {
-                            "value": "5",
+                            "value": "2",
                             "text": "I was able to solve the problem with no difficulty."
                         }
                     ]
+                },
+                {
+                    "type": "expression",
+                    "name": "examples_n",
+                    "expression": "calculateExamplesScore(\"Examples\", {python1-answer}, {python1-reaction})",
+                    "visible": false,
+                    "defaultValue": null
                 }
             ]
         },
         {
-            "name": "c7c93bb0073d41fb9ee3e3552889aad2",
+            "name": "page8",
             "title": "Placement Section A",
-            "visibleIf": "({done_1} notempty and {done_1} = true) or #{Previous Course} empty",
+            "visibleIf": "{state} <= 1",
             "elements": [
                 {
                     "type": "expression",
                     "name": "finish",
                     "expression": true,
-                    "visible": false
+                    "visible": false,
+                    "defaultValue": true
                 },
                 {
                     "type": "html",
                     "name": "2300 A1",
                     "title": "2300",
-                    "html": "<h1 data-placement=\"No Experience\"><span class=\"badge bg-success\">CIS 2300, Section A</span></h1><p>Since you don't have any previous programming experience, we recommend you take <a target= \"new \" href= \"https://www.cs.washington.edu/academics/undergraduate/non-major-options/#cse121 \">CSE 121</a>. This course will start from the very beginning and will help you learn basic programming skills along with other students with limited experience.</p><p>If you're more interested in using programming as a tool for data analysis and visualization, you might also want to consider <a target= \"new \" href= \"https://www.cs.washington.edu/academics/undergraduate/non-major-options/#cse160 \">CSE 160</a>. This course also does not require any previous experience and focuses on using programming in Python to solve problems using data sets drawn from the sciences, engineering, business and the humanities.</p>"
+                    "html": "<h1 data-placement=\"No Experience\"><span class=\"badge bg-success\">CIS 2300, Section A, B, C, or D</span></h1><p>Since you don't have any previous programming experience, we recommend you enroll in CIS 2300 section A, B, C, or D. This section will start from the very beginning and will help you learn basic programming skills along with other students with limited experience.</p>"
                 }
             ]
         },
         {
-            "name": "c7c93bb0073d41fb9ee3e3552889aad2",
+            "name": "page9",
             "title": "Placement Section A",
-            "visibleIf": "{done_2} notempty and {done_2} = true",
+            "visibleIf": "{state} > 1 and {state} < 3",
             "elements": [
                 {
                     "type": "html",
                     "name": "2300 A2",
                     "title": "2300",
-                    "html": "<h1 data-placement=\"Limited Experience\"><span class=\"badge bg-success\">CIS 2300, Section A</span></h1><p>Since your programming experience is limited, we recommend you take <a target= \"new \" href= \"https://www.cs.washington.edu/academics/undergraduate/non-major-options/#cse121 \">CSE 121</a>. This course will start from the very beginning and will help you learn basic programming skills along with other students with limited experience.</p><p>If you're more interested in using programming as a tool for data analysis and visualization, you might also want to consider <a target= \"new \" href= \"https://www.cs.washington.edu/academics/undergraduate/non-major-options/#cse160 \">CSE 160</a>. This course also does not require any previous experience and focuses on using programming in Python to solve problems using data sets drawn from the sciences, engineering, business and the humanities.</p>"
+                    "html": "<h1 data-placement=\"Limited Experience\"><span class=\"badge bg-success\">CIS 2300, Section A, B, C, or D</span></h1><p>Since your programming experience is limited, we recommend you enroll in CIS 2300 section A, B, C, or D. This section will start from the very beginning and will help you learn basic programming skills along with other students with limited experience.</p>"
                 },
                 {
                     "type": "expression",
                     "name": "finish",
-                    "expression": true
+                    "expression": true,
+                    "visible": false,
+                    "defaultValue": true
                 }
             ]
         },
         {
-            "name": "c7c93bb0073d41fb9ee3e3552889aaccc",
+            "name": "page10",
+            "title": "Placement Section A",
+            "visibleIf": "{state} >= 3 and {state} <= 5",
+            "elements": [
+                {
+                    "type": "html",
+                    "name": "2300 A3",
+                    "title": "2300",
+                    "html": "<h1 data-placement=\"Needs Refresher\"><span class=\"badge bg-success\">CIS 2300, Section A, B, C, or D</span></h1><p>It sounds like you could use some refreshers on programming concepts. We recommend you enroll in CIS 2300 section A, B, C, or D. This section will start from the very beginning and will reinforce programming skills.</p>"
+                },
+                {
+                    "type": "expression",
+                    "name": "finish",
+                    "expression": true,
+                    "visible": false,
+                    "defaultValue": true
+                }
+            ]
+        },
+        {
+            "name": "page11",
             "title": "Placement Section B",
-            "visibleIf": "{done_3} notempty and {done_3} = true",
+            "visibleIf": "{state} > 6",
             "elements": [
                 {
                     "type": "html",
                     "name": "2300 B",
                     "title": "2300",
-                    "html": "<h1><span class=\"badge bg-success\">CIS 2300, Section B</span></h1><p>With other experienced students</p>"
+                    "html": "<h1 data-placement=\"Good Experience\"><span class=\"badge bg-success\">CIS 2300, Section E, F, G, or H</span></h1><p>Great! You seem to have some good prior knowledge. We suggest you enroll in section E, F, G, or H with other experienced students. This will ensure that the pace of instruction matches your skill level.</p>"
                 },
                 {
                     "type": "expression",
                     "name": "finish",
-                    "expression": "true",
-                    "visible": false
+                    "expression": true,
+                    "visible": false,
+                    "defaultValue": true
+                }
+            ]
+        },
+        {
+            "name": "page12",
+            "title": "Thank You",
+            "elements": [
+                {
+                    "type": "html",
+                    "html": "<h1>Thank you for completing the self-placement!</h1><p>If you have any questions about your placement or which course is right for you, please contact us at <a href=\"mailto:informationsystemsandstatistics@baruch.cuny.edu?subject=CIS 2300 Self-Placement Question\">informationsystemsandstatistics@baruch.cuny.edu</a></p>"
                 }
             ]
         }
     ],
     "showProgressBar": true,
     "headerView": "advanced",
+    "showPrevButton": false,
+    "completedHtml": "<h2>Feel free to reach out with any questions!</h2><p>Contact: <a href=\"mailto:informationsystemsandstatistics@baruch.cuny.edu?subject=CIS 2300 Self-Placement Question\">informationsystemsandstatistics@baruch.cuny.edu</a></p>",
     "calculatedValues": [
         {
-            "name": "status",
-            "expression": ""
+            "name": "state",
+            "expression": "determineState({Previous Course}, {Previous AP IB Course}, {Previous Experience}, {AP CS A Score}, {IB Score}, {concepts_n}, {examples_n})",
+            "defaultValue": null
         }
-    ],
-    "completedHtml": "<h1>Thank you for completing the self-placement!</h1><p>If you have any questions about your placement or which course is right for you, please contact us"
+    ]
 }
