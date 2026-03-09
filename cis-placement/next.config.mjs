@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   distDir: "out",
-  output: "export"
+  output: "export",
+  basePath: "/cis-placement",
 };
 
 export default nextConfig;
