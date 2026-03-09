@@ -32,12 +32,17 @@ jobs:
       run:
         working-directory: ${{ github.workspace }}/cis-placement
     steps:
+      - name: Add custom directory to PATH
+        run: echo "${{ github.workspace }}/cis-placement" >> $GITHUB_PATH
+        shell: bash
       - name: Checkout
         uses: actions/checkout@v4
         with:
           path: cis-placement
       - name: Detect package manager
         id: detect-package-manager
+        with:
+          path: cis-placement
         run: |
           if [ -f "${{ github.workspace }}/yarn.lock" ]; then
             echo "manager=yarn" >> $GITHUB_OUTPUT
