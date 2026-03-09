@@ -35,6 +35,8 @@ jobs:
           path: ${{ github.workspace }}/cis-placement
       - name: Detect package manager
         id: detect-package-manager
+        with:
+          path: ${{ github.workspace }}/cis-placement
         run: |
           if [ -f "${{ github.workspace }}/cis-placement/yarn.lock" ]; then
             echo "manager=yarn" >> $GITHUB_OUTPUT
