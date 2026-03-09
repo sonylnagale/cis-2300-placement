@@ -2,7 +2,8 @@
 const nextConfig = {
   distDir: "out",
   output: "export",
-  basePath: "/cis-2300-placement/cis-placement",
+  basePath: "/cis-2300-placement/",
+  trailingSlash: true,
 };
 
 export default nextConfig;
