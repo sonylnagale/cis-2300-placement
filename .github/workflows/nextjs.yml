@@ -34,7 +34,7 @@ jobs:
       - name: Detect package manager
         id: detect-package-manager
         run: |
-          echo "$GITHUB_PATH/cis-placement" >> $GITHUB_PATH
+          echo "$GITHUB_WORKSPACE/cis-placement" >> $GITHUB_WORKSPACE
           if [ -f "${{ github.workspace }}/yarn.lock" ]; then
             echo "manager=yarn" >> $GITHUB_OUTPUT
             echo "command=install" >> $GITHUB_OUTPUT
