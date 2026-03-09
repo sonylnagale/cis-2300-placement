@@ -32,12 +32,12 @@ jobs:
       run:
         working-directory: ${{ github.workspace }}/cis-placement
     steps:
-      - name: Add custom directory to PATH
-        run: echo "${{ github.workspace }}/cis-placement" >> $GITHUB_PATH
       - name: Checkout
         uses: actions/checkout@v4
         with:
           path: cis-placement
+      - name: Add custom directory to PATH
+        run: echo "${{ github.workspace }}/cis-placement" >> $GITHUB_PATH
       - name: Detect package manager
         id: detect-package-manager
         with:
