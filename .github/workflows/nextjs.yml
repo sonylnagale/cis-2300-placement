@@ -82,8 +82,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          working-directory: ./cis-placement
-          path: ./out
+          path: ./cis-placement/out
 
   # Deployment job
   deploy:
@@ -96,3 +95,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          working-directory: ./cis-placement
