@@ -75,9 +75,11 @@ export default function SurveyComponent() {
 
     if (apcourse !== false) {
       if ((+apScore || 0) + (+ibScore || 0) > 3) {
-        state += 1; // <= 2
-        AP_or_IB = true;
+        state += 2; // <= 2
+      } else {
+        state += 1;
       }
+      AP_or_IB = true;
     }
 
     if (previousExperience === true) {

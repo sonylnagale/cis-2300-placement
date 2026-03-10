@@ -1,78 +1,69 @@
-flowchart TD
-  Start([Start])
-  introduction["Introduction"]
-  introduction_2["Introduction 2"]
-  your_previous_experience["Your Previous Experience<br/>• Have you taken a previous computer science course?<br/>• Have you taken an AP or IB course?"]
-  advanced_placement_courses["Advanced Placement Courses<br/>• Which AP or IB course did you complete?<br/>• What was your score on the AP Computer Science A exam?<br/>• What was your score on the IB Computer Science exam?"]
-  your_previous_experience["Your Previous Experience<br/>• Do you have previous programming experience outside of a course?"]
-  topics_and_constructs["Topics and Constructs<br/>• Variables and assignment statements<br/>• Datatypes (_e.g._, `int`, `float`, `str`)<br/>• Conditionals (e.g., `if` `else`)<br/>• Loops<br/>• Lists (or arrays)<br/>• Dictionaries (or objects)<br/>• Functions and Methods"]
-  code_assessment["Code Assessment<br/>• What is the output?<br/>• Which of the following best describes your experience with the preceding problem"]
-  placement_section_a["Placement Section A"]
-  placement_section_a["Placement Section A"]
-  placement_section_a["Placement Section A"]
-  placement_section_b["Placement Section B"]
-  thank_you["Thank You"]
-  Start --> introduction
-  introduction --> introduction_2
-  introduction_2 --> your_previous_experience
-  dec_3{"(#Previous AP IB Course) = true"}
-  your_previous_experience --> dec_3
-  dec_3_yes["yes"]
-  dec_3_no["no"]
-  dec_3 --> dec_3_yes
-  dec_3_yes --> advanced_placement_courses
-  dec_3 --> dec_3_no
-  dec_3_no --> your_previous_experience
-  advanced_placement_courses --> your_previous_experience
-  dec_5{"(state) > 2"}
-  your_previous_experience --> dec_5
-  dec_5_yes["yes"]
-  dec_5_no["no"]
-  dec_5 --> dec_5_yes
-  dec_5_yes --> topics_and_constructs
-  dec_5 --> dec_5_no
-  dec_5_no --> code_assessment
-  dec_6{"(state) > 4"}
-  topics_and_constructs --> dec_6
-  dec_6_yes["yes"]
-  dec_6_no["no"]
-  dec_6 --> dec_6_yes
-  dec_6_yes --> code_assessment
-  dec_6 --> dec_6_no
-  dec_6_no --> placement_section_a
-  dec_7{"(state) <= 1"}
-  code_assessment --> dec_7
-  dec_7_yes["yes"]
-  dec_7_no["no"]
-  dec_7 --> dec_7_yes
-  dec_7_yes --> placement_section_a
-  dec_7 --> dec_7_no
-  dec_7_no --> placement_section_a
-  dec_8{"(state) > 1 and (state) < 3"}
-  placement_section_a --> dec_8
-  dec_8_yes["yes"]
-  dec_8_no["no"]
-  dec_8 --> dec_8_yes
-  dec_8_yes --> placement_section_a
-  dec_8 --> dec_8_no
-  dec_8_no --> placement_section_a
-  dec_9{"(state) >= 3 and (state) <= 5"}
-  placement_section_a --> dec_9
-  dec_9_yes["yes"]
-  dec_9_no["no"]
-  dec_9 --> dec_9_yes
-  dec_9_yes --> placement_section_a
-  dec_9 --> dec_9_no
-  dec_9_no --> placement_section_b
-  dec_10{"(state) > 6"}
-  placement_section_a --> dec_10
-  dec_10_yes["yes"]
-  dec_10_no["no"]
-  dec_10 --> dec_10_yes
-  dec_10_yes --> placement_section_b
-  dec_10 --> dec_10_no
-  dec_10_no --> thank_you
-  placement_section_b --> thank_you
-  thank_you --> Finish([Finish])
-  style Start fill:#f9f,stroke:#333,stroke-width:1px
-  style Finish fill:#9f9,stroke:#333,stroke-width:1px
+---
+config:
+  flowchart:
+    curve: basis
+    theme: default
+---
+
+flowchart TB
+  
+  subgraph C["&nbsp;"]
+    your_previous_experience{"Do you have previous programming experience outside of a course?"} -- yes _(+2)_ --> condition
+    your_previous_experience{"Do you have previous programming experience outside of a course?"} -- no _(+0)_ --> condition
+  end
+  
+  score -- "`AP: 4–5 
+    or IB: >= 5 
+    _(+2)_`"  --> Course
+  score -- "`AP: < 3 
+  or IB: < 4 
+  _(+0)_`" --> Course
+  Course -- yes _(+1)_--> your_previous_experience
+  
+  
+  subgraph F["&nbsp;"]
+   condition -- no  _(0)_ --> End_A(["No Experience"])
+  end
+  condition[" <= 1 ?"] -- no --> End_B
+  topics_and_constructs -- average points < 1.5  --> End_B(["Refresher"])
+
+  condition -- yes --> topics_and_constructs
+  topics_and_constructs["`Topics and Constructs 
+  _(1 point for each **somewhat**, 2 points for each **entirely**)_
+  `"]
+
+  subgraph A["&nbsp;"]
+      Start([Start]) --> introduction["Introduction"]
+      introduction --> background["Background"]
+      background -- _(0)_ --> AP{"Have you taken an AP or IB course?"}
+      AP -- no _(+0)_ --> Course{"Have you taken a previous computer science course?"}
+      Course -- no _(+0)_ --> your_previous_experience
+  end
+  
+  subgraph B["&nbsp;"]
+    AP -- yes _(+1)_ --> which_AP["Which AP or IB course did you complete?"]
+    which_AP --> score["What was your score on the {course} exam?"]
+  end
+
+  topics_and_constructs["`Topics and Constructs 
+    _(1 point for each **somewhat**, 2 points for each **entirely**)_
+    `"] -- average points >= 1.5 (+2) --> code_assessment
+  
+  subgraph E["&nbsp;"]
+    code_assessment["`Code Assessment
+    _(+1 for answered correctly)_
+    _(+1 for each **little difficulty**, +2 points for each **no difficulty**)_
+    `"] --> condition2[" average points < 2.5 "] --> End_B
+    condition2 -- average points >= 2.5 --> End_C 
+    End_C(["Advanced"])
+  end
+  style A fill:none,stroke:none
+  style B fill:none,stroke:none
+  style C fill:none,stroke:none
+  style E fill:none,stroke:none
+  style F fill:none,stroke:none
+  style Start fill:#9f9,stroke:#333,stroke-width:1px,color:#000
+  style End_A fill:#f00,stroke:#333,stroke-width:1px,color:#000
+  style End_B fill:#ff0,stroke:#333,stroke-width:1px,color:#000
+  style End_C fill:#0f0,stroke:#333,stroke-width:1px,color:#000
+  %% style End_C fill:#0f0,stroke:#333,stroke-width:1px,color:#000

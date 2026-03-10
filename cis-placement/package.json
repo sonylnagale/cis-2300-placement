@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "postflowchart:generate": "npx @mermaid-js/mermaid-cli -i diagrams/flowchart.mmd -o public/flowchart.svg",
-    "flowchart:generate": "node scripts/generate-flowchart.js",
+    "flowchart:image": "npx @mermaid-js/mermaid-cli -i diagrams/flowchart.mmd -o public/flowchart.png",
+    "flowchart": "node scripts/generate-flowchart.js",
     "test": "playwright test",
     "test:screenshots": "SCREENSHOTS=true playwright test"
   },

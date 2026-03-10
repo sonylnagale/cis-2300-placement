@@ -15,7 +15,7 @@
         },
         {
             "name": "page2",
-            "title": "Introduction 2",
+            "title": "Background",
             "elements": [
                 {
                     "type": "html",
@@ -26,7 +26,7 @@
         },
         {
             "name": "page3",
-            "title": "Your Previous Experience",
+            "title": "Previous Courses",
             "elements": [
                 {
                     "type": "boolean",
@@ -359,7 +359,7 @@
         {
             "name": "page7",
             "title": "Code Assessment",
-            "visibleIf": "{state} > 4",
+            "visibleIf": "{state} > 3",
             "description": "Given the following code, answer the following questions:",
             "elements": [
                 {
