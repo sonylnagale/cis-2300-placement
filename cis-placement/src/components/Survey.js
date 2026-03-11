@@ -445,7 +445,7 @@ export default function SurveyComponent() {
     }
   }
 
-  const isDev = process.env.NODE_ENV === 'development';
+  const isDev = true; //process.env.NODE_ENV === 'development';
 
   const sidebarStyle = {
     position: 'fixed',
