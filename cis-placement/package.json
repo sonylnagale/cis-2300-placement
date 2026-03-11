@@ -6,13 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "flowchart:image": "npx @mermaid-js/mermaid-cli -i diagrams/flowchart.mmd -o public/flowchart.png",
+    "flowchart:image": "npx @mermaid-js/mermaid-cli -i diagrams/flowchart.mmd -o public/flowchart.pdf && pdf2svg public/flowchart.pdf public/flowchart2.svg",
     "flowchart": "node scripts/generate-flowchart.js",
     "test": "playwright test",
     "test:screenshots": "SCREENSHOTS=true playwright test"
   },
   "devDependencies": {
-    "@playwright/test": "^1.44.0"
+    "@playwright/test": "^1.44.0",
+    "pdf2svg": "^0.1.2"
   },
   "dependencies": {
     "bootstrap": "^5.3.8",

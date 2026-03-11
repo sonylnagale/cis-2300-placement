@@ -2,52 +2,38 @@
     "title": "",
     "pages": [
         {
-            "name": "page1",
+            "name": "Introduction",
             "title": "Introduction",
             "elements": [
                 {
                     "type": "html",
                     "name": "Introduction",
-                    "html": "<h2>Welcome!</h2><p>We're excited that you are interested in taking an introductory Computer Information Systems course! Our <a target=\"_blank\" href=\"https://baruch-undergraduate.catalog.cuny.edu/courses/1473721\">CIS 2300 programming course</a> is designed for all students, regardless of how much prior experience you do or do not have and regardless of your goals or reasons for taking the course. In that spirit, we want everyone to have the best experience in your first course, especially since prior experience can come in many different forms. It can be intimidating to be in a class full of students with prior experience, and conversely being seasoned in a room of beginners. Since we offer multiple sections of 2300, this anonymous self-placement will suggest the most appropriate section for you.</p>",
+                    "html": "<h2>Welcome!</h2><p>We're excited that you are interested in taking an introductory Computer Information Systems course! Our <a target=\"_blank\" href=\"https://baruch-undergraduate.catalog.cuny.edu/courses/1473721\">CIS 2300 programming course</a> is designed for all students, regardless of how much prior experience you do or do not have and regardless of your goals or reasons for taking the course. In that spirit, we want everyone to have the best experience in your first course, especially since prior experience can come in many different forms. It can be intimidating to be in a class full of students with prior experience and conversely being seasoned in a room of beginners. Since we offer multiple sections of 2300, this anonymous self-placement will suggest the most appropriate section for you.</p>",
                     "class": "reset"
                 }
             ]
         },
         {
-            "name": "page2",
+            "name": "Background",
             "title": "Background",
             "elements": [
                 {
                     "type": "html",
                     "name": "Background",
-                    "html": "<p>If you have never programmed before, or if your programming experience is limited, you will be placed in a cohort of similarly new students, designed for students with no previous experience whatsoever. If you took a high-school programming course intended to be similar to a first college course, like AP Computer Science A or IB Computer Science, we will suggest a section of CIS 2300 geared towards those with experience. This guided self-placement will help suggest the best section for you by asking you questions about your background. These will include questions about the specific courses and experience you have, how familiar you are with various topics and concepts, and how comfortable you are solving practice problems. We hope this will help most people have the right experience, but if you still have questions at the end, you can always contact us at <a href=\"mailto:informationsystemsandstatistics@baruch.cuny.edu?subject=CIS 2300 Self-Placement Question\">informationsystemsandstatistics@baruch.cuny.edu</a> for more support. </p> <p> This self-placement is <em>adaptive</em>, meaning which questions you see and in which order will depend on your responses, so each student will have a slightly different experience, and if you go back and change your answers, you may see different questions appear. This is to help make sure we get the information that will most help us recommend the best course for you. As you go through the self-placement, you may also encounter terms or concepts you haven't heard of before. Don't be intimidated—if you haven't seen a topic or concept before, that just means you should probably be in the section that teaches it! We encourage you to answer all questions as truthfully as possible based on your <em>current</em> experience. </p> <p>While CIS 2300 is taught in Python, you may have experience in other languages. Most concepts translate from one language to others, so be aware that some terms may be different.</p> <p>When you're ready, click the button below to begin.</p>"
+                    "html": "<p>If you have never programmed before, or if your programming experience is limited, you may choose in a cohort of similarly new students, designed for students with no previous experience whatsoever. If you took a high-school programming course intended to be similar to a first college course, like AP Computer Science A or IB Computer Science, we will suggest a section of CIS 2300 geared towards those with experience. This guided self-placement will help suggest the best section for you by asking you questions about your background. These will include questions about the specific courses and experience you have, how familiar you are with various topics and concepts, and how comfortable you are solving practice problems. We hope this will help most people have the right experience, but if you still have questions at the end, you can always contact us at <a href=\"mailto:informationsystemsandstatistics@baruch.cuny.edu?subject=CIS 2300 Self-Placement Question\">informationsystemsandstatistics@baruch.cuny.edu</a> for more support. </p> <p> This self-placement is <em>adaptive</em>, meaning which questions you see and in which order will depend on your responses, so each student will have a slightly different experience, and if you go back and change your answers, you may see different questions appear. This is to help make sure we get the information that will most help us recommend the best course for you. As you go through the self-placement, you may also encounter terms or concepts you haven't heard of before. Don't be intimidated—if you haven't seen a topic or concept before, that just means you should probably be in the section that teaches it! We encourage you to answer all questions as truthfully as possible based on your <em>current</em> experience. </p> <p>While CIS 2300 is taught in Python, you may have experience in other languages. Most concepts translate from one language to others, so be aware that some terms may be different.</p> <p>When you're ready, click the button below to begin.</p>"
                 }
             ]
         },
         {
-            "name": "page3",
-            "title": "Previous Courses",
+            "name": "Advanced Placement Courses",
+            "title": "Advanced Placement Courses",
             "elements": [
-                {
-                    "type": "boolean",
-                    "name": "Previous Course",
-                    "title": "Have you taken a previous computer science course?",
-                    "defaultValue": null
-                },
                 {
                     "type": "boolean",
                     "name": "Previous AP IB Course",
                     "title": "Have you taken an AP or IB course?",
-                    "visibleIf": "{#Previous Course} notempty",
                     "defaultValue": null
-                }
-            ]
-        },
-        {
-            "name": "page4",
-            "title": "Advanced Placement Courses",
-            "visibleIf": "{#Previous AP IB Course} = true",
-            "elements": [
+                },
                 {
                     "type": "radiogroup",
                     "name": "Most Recent Course",
@@ -76,9 +62,9 @@
                 {
                     "type": "radiogroup",
                     "name": "AP CS A Score",
-                    "visibleIf": "{Most Recent Course} = 'AP-A'",
+                    "visibleIf": "{Most Recent Course} = 'AP-A' or {Most Recent Course} = 'AP-P'",
                     "title": "What was your score on the AP Computer Science A exam?",
-                    "requiredIf": "{Most Recent Course} = 'AP-A'",
+                    "requiredIf": "{Most Recent Course} = 'AP-A' or {Most Recent Course} = 'AP-P'",
                     "choices": [
                         {
                             "value": 1
@@ -138,8 +124,20 @@
             ]
         },
         {
-            "name": "page5",
-            "title": "Your Previous Experience",
+            "name": "Previous Course",
+            "title": "Previous Course",
+            "elements": [
+                {
+                    "type": "boolean",
+                    "name": "Previous Course",
+                    "title": "Have you taken a previous computer science course?",
+                    "defaultValue": null
+                }
+            ]
+        },
+        {
+            "name": "Previous Experience",
+            "title": "Previous Experience",
             "elements": [
                 {
                     "type": "boolean",
@@ -151,9 +149,9 @@
             ]
         },
         {
-            "name": "page6",
+            "name": "topics",
             "title": "Topics and Constructs",
-            "visibleIf": "{state} > 2",
+            "visibleIf": "{preliminary_state} > 1",
             "description": "How familiar and comfortable are you with each of the following programming topics/constructs?",
             "elements": [
                 {
@@ -162,105 +160,105 @@
                     "title": "Variables and assignment statements",
                     "choices": [
                         {
-                            "value": "0",
+                            "value": "vars:0",
                             "text": "I have never heard of this."
                         },
                         {
-                            "value": "1",
+                            "value": "vars:1",
                             "text": "I have heard of this but don't know what it is or don't understand it."
                         },
                         {
-                            "value": "2",
+                            "value": "vars:2",
                             "text": "I know what this is but I am not comfortable using it in programming."
                         },
                         {
-                            "value": "3",
+                            "value": "vars:3",
                             "text": "I am somewhat comfortable using this in programming."
                         },
                         {
-                            "value": "4",
+                            "value": "vars:4",
                             "text": "I am entirely comfortable using this in programming."
                         }
                     ]
                 },
                 {
                     "type": "radiogroup",
-                    "name": "Datatypes",
+                    "name": "datatypes",
                     "title": "Datatypes (_e.g._, `int`, `float`, `str`)",
                     "choices": [
                         {
-                            "value": "0",
+                            "value": "datatypes:0",
                             "text": "I have never heard of this."
                         },
                         {
-                            "value": "1",
+                            "value": "datatypes:1",
                             "text": "I have heard of this but don't know what it is or don't understand it."
                         },
                         {
-                            "value": "2",
+                            "value": "datatypes:2",
                             "text": "I know what this is but I am not comfortable using it in programming."
                         },
                         {
-                            "value": "3",
+                            "value": "datatypes:3",
                             "text": "I am somewhat comfortable using this in programming."
                         },
                         {
-                            "value": "4",
+                            "value": "datatypes:4",
                             "text": "I am entirely comfortable using this in programming."
                         }
                     ]
                 },
                 {
                     "type": "radiogroup",
-                    "name": "Conditionals",
-                    "title": "Conditionals (e.g., `if` `else`)",
+                    "name": "conditionals",
+                    "title": "Conditionals (_e.g._, `if`, `else`)",
                     "choices": [
                         {
-                            "value": "0",
+                            "value": "conditionals:0",
                             "text": "I have never heard of this."
                         },
                         {
-                            "value": "1",
+                            "value": "conditionals:1",
                             "text": "I have heard of this but don't know what it is or don't understand it."
                         },
                         {
-                            "value": "2",
+                            "value": "conditionals:2",
                             "text": "I know what this is but I am not comfortable using it in programming."
                         },
                         {
-                            "value": "3",
+                            "value": "conditionals:3",
                             "text": "I am somewhat comfortable using this in programming."
                         },
                         {
-                            "value": "4",
+                            "value": "conditionals:4",
                             "text": "I am entirely comfortable using this in programming."
                         }
                     ]
                 },
                 {
                     "type": "radiogroup",
-                    "name": "Loops",
+                    "name": "loops",
                     "title": "Loops",
                     "choices": [
                         {
-                            "value": "0",
+                            "value": "loops:0",
                             "text": "I have never heard of this."
                         },
                         {
-                            "value": "1",
+                            "value": "loops:1",
                             "text": "I have heard of this but don't know what it is or don't understand it."
                         },
                         {
-                            "value": "2",
+                            "value": "loops:2",
                             "text": "I know what this is but I am not comfortable using it in programming."
                         },
                         {
-                            "value": "3",
+                            "value": "loops:3",
                             "text": "I am somewhat comfortable using this in programming.",
                             "val": 2
                         },
                         {
-                            "value": "4",
+                            "value": "loops:4",
                             "text": "I am entirely comfortable using this in programming.",
                             "val": 4
                         }
@@ -269,53 +267,26 @@
                 {
                     "type": "radiogroup",
                     "name": "lists",
-                    "title": "Lists (or arrays)",
+                    "title": "Strings and Lists (or Arrays)",
                     "choices": [
                         {
-                            "value": "0",
+                            "value": "lists:0",
                             "text": "I have never heard of this."
                         },
                         {
-                            "value": "1",
+                            "value": "lists:1",
                             "text": "I have heard of this but don't know what it is or don't understand it."
                         },
                         {
-                            "value": "2",
+                            "value": "lists:2",
                             "text": "I know what this is but I am not comfortable using it in programming."
                         },
                         {
-                            "value": "3",
+                            "value": "lists:3",
                             "text": "I am somewhat comfortable using this in programming."
                         },
                         {
-                            "value": "4",
-                            "text": "I am entirely comfortable using this in programming."
-                        }
-                    ]
-                },
-                {
-                    "type": "radiogroup",
-                    "name": "dictionaries",
-                    "title": "Dictionaries (or objects)",
-                    "choices": [
-                        {
-                            "value": "0",
-                            "text": "I have never heard of this."
-                        },
-                        {
-                            "value": "1",
-                            "text": "I have heard of this but don't know what it is or don't understand it."
-                        },
-                        {
-                            "value": "2",
-                            "text": "I know what this is but I am not comfortable using it in programming."
-                        },
-                        {
-                            "value": "3",
-                            "text": "I am somewhat comfortable using this in programming."
-                        },
-                        {
-                            "value": "4",
+                            "value": "lists:4",
                             "text": "I am entirely comfortable using this in programming."
                         }
                     ]
@@ -326,107 +297,447 @@
                     "title": "Functions and Methods",
                     "choices": [
                         {
-                            "value": "0",
+                            "value": "functions and methods:0",
                             "text": "I have never heard of this."
                         },
                         {
-                            "value": "1",
+                            "value": "functions and methods:1",
                             "text": "I have heard of this but don't know what it is or don't understand it."
                         },
                         {
-                            "value": "2",
+                            "value": "functions and methods:2",
                             "text": "I know what this is but I am not comfortable using it in programming."
                         },
                         {
-                            "value": "3",
+                            "value": "functions and methods:3",
                             "text": "I am somewhat comfortable using this in programming."
                         },
                         {
-                            "value": "4",
+                            "value": "functions and methods:4",
                             "text": "I am entirely comfortable using this in programming."
                         }
                     ]
                 },
                 {
-                    "type": "expression",
-                    "name": "concepts_n",
-                    "expression": "calculateConceptsScore(\"Concepts\", {$vars}, {Datatypes}, {Conditionals}, {Loops}, {lists}, {dictionaries}, {functions and methods})",
-                    "visible": false,
-                    "defaultValue": null
+                    "type": "radiogroup",
+                    "name": "file i/o",
+                    "title": "File Input/Output",
+                    "choices": [
+                        {
+                            "value": "file i/o:0",
+                            "text": "I have never heard of this."
+                        },
+                        {
+                            "value": "file i/o:1",
+                            "text": "I have heard of this but don't know what it is or don't understand it."
+                        },
+                        {
+                            "value": "file i/o:2",
+                            "text": "I know what this is but I am not comfortable using it in programming."
+                        },
+                        {
+                            "value": "file i/o:3",
+                            "text": "I am somewhat comfortable using this in programming."
+                        },
+                        {
+                            "value": "file i/o:4",
+                            "text": "I am entirely comfortable using this in programming."
+                        }
+                    ]
+                },
+                {
+                    "type": "radiogroup",
+                    "name": "dictionaries",
+                    "title": "Dictionaries (or Objects)",
+                    "choices": [
+                        {
+                            "value": "dictionaries:0",
+                            "text": "I have never heard of this."
+                        },
+                        {
+                            "value": "dictionaries:1",
+                            "text": "I have heard of this but don't know what it is or don't understand it."
+                        },
+                        {
+                            "value": "dictionaries:2",
+                            "text": "I know what this is but I am not comfortable using it in programming."
+                        },
+                        {
+                            "value": "dictionaries:3",
+                            "text": "I am somewhat comfortable using this in programming."
+                        },
+                        {
+                            "value": "dictionaries:4",
+                            "text": "I am entirely comfortable using this in programming."
+                        }
+                    ]
                 }
             ]
         },
         {
-            "name": "page7",
-            "title": "Code Assessment",
-            "visibleIf": "{state} > 3",
+            "name": "code-conditionals",
+            "title": "Code Assessment: Conditionals",
+            "visibleIf": "{concepts_state} >= 4",
             "description": "Given the following code, answer the following questions:",
             "elements": [
                 {
                     "type": "html",
-                    "name": "python1",
+                    "name": "python_conditionals",
+                    "html": "<pre><code class=\"language-python hljs\">x = 5\ny = 10\nz = 15\na = 20\n\nif x > y and y < z:\n\tif z > a:\n\t\tprint(\"z is the largest number.\")\n\telse:\n\t\tprint(\"a is the largest number.\")\nelif y > x and x < z:\n if z > y or True:\n print(\"z is the largest number.\")\n else:\n print(\"y is the largest number.\")\nelse:\n if y > x:\n print(\"y is the largest number.\")\n else:\n print(\"x is the largest number.\")</code></pre>"
+                },
+                {
+                    "type": "radiogroup",
+                    "name": "python_conditionals_answer",
+                    "title": "What is the output?",
+                    "choices": [
+                        {
+                            "value": "conditionals:0",
+                            "text": "<code>a is the largest number</code>"
+                        },
+                        {
+                            "value": "conditionals:1",
+                            "text": "<code>z is the largest number</code>"
+                        },
+                        {
+                            "value": "conditionals:2",
+                            "text": "<code>y is the largest number</code>"
+                        }
+                    ]
+                },
+                {
+                    "type": "radiogroup",
+                    "name": "python_conditionals_reaction",
+                    "visibleIf": "{python_conditionals_answer} notempty",
+                    "title": "Which of the following best describes your experience with the preceding problem?",
+                    "choices": [
+                        {
+                            "value": "reaction:0",
+                            "text": "I did not understand the problem or did not know how to begin solving it."
+                        },
+                        {
+                            "value": "reaction:1",
+                            "text": "I was able to begin solving the problem but got stuck."
+                        },
+                        {
+                            "value": "reaction:2",
+                            "text": "I was able to complete the problem but struggled greatly."
+                        },
+                        {
+                            "value": "reaction:3",
+                            "text": "I was able to solve the problem with a little difficulty."
+                        },
+                        {
+                            "value": "reaction:4",
+                            "text": "I was able to solve the problem with no difficulty."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "code-for-loop",
+            "title": "Code Assessment: For Loops",
+            "visibleIf": "{python_conditionals_reaction} notempty",
+            "description": "Given the following code, answer the following questions:",
+            "elements": [
+                {
+                    "type": "html",
+                    "name": "python_for loop",
                     "html": "<pre><code class=\"language-python hljs\">def figure(max_num):\n    for line in range(1, max_num + 1):\n        for dots in range(1, max_num - line + 1):\n            print(\".\", end=\"\")\n       print(line)\n\nfigure(8)</code></pre>"
                 },
                 {
                     "type": "radiogroup",
-                    "name": "python1-answer",
+                    "name": "python_for loop_answer",
                     "title": "What is the output?",
                     "choices": [
                         {
-                            "value": "0",
+                            "value": "for-loop:0",
                             "text": "<code>.......1<br/>......2<br/>.....3<br/>....4<br/>...5<br/>..6<br/>.7<br/>8</code>"
                         },
                         {
-                            "value": "10",
+                            "value": "for-loop:1",
                             "text": "<code>.......8<br/>......7<br/>.....6<br/>....5<br/>...4<br/>..3<br/>.2<br/>1</code>"
                         },
                         {
-                            "value": "-1",
+                            "value": "for-loop:2",
                             "text": "Something else"
                         }
                     ]
                 },
                 {
                     "type": "radiogroup",
-                    "name": "python1-reaction",
-                    "visibleIf": "{python1-answer} notempty",
+                    "name": "python_for loop_reaction",
+                    "visibleIf": "{python_for loop_answer} notempty",
                     "title": "Which of the following best describes your experience with the preceding problem?",
                     "choices": [
                         {
-                            "value": "-10",
+                            "value": "reaction:0",
                             "text": "I did not understand the problem or did not know how to begin solving it."
                         },
                         {
-                            "value": "-5",
+                            "value": "reaction:1",
                             "text": "I was able to begin solving the problem but got stuck."
                         },
                         {
-                            "value": "-2",
+                            "value": "reaction:2",
                             "text": "I was able to complete the problem but struggled greatly."
                         },
                         {
-                            "value": "0",
+                            "value": "reaction:3",
                             "text": "I was able to solve the problem with a little difficulty."
                         },
                         {
-                            "value": "2",
+                            "value": "reaction:4",
                             "text": "I was able to solve the problem with no difficulty."
                         }
                     ]
-                },
-                {
-                    "type": "expression",
-                    "name": "examples_n",
-                    "expression": "calculateExamplesScore(\"Examples\", {python1-answer}, {python1-reaction})",
-                    "visible": false,
-                    "defaultValue": null
                 }
             ]
         },
         {
-            "name": "page8",
+            "name": "code-while-loop",
+            "title": "Code Assessment: While Loops",
+            "visibleIf": "{concepts_state} >= 3",
+            "description": "Given the following code, answer the following questions:",
+            "elements": [
+                {
+                    "type": "html",
+                    "name": "python_while loop",
+                    "html": "<pre><code class=\"language-python hljs\">total_chars = 0\n sentinel = \"quit\"\n prompt = 'Type a word (or \"' + sentinel +'\" to quit): '\n word = input(prompt)\n while word != sentinel:\n total_chars += len(word)\n word = input(prompt)\n print(\"The total number of characters is:\", total_chars)</code></pre>"
+                },
+                {
+                    "type": "radiogroup",
+                    "name": "python_while loop_answer",
+                    "title": "What is the output?",
+                    "choices": [
+                        {
+                            "value": "while-loop:0",
+                            "text": "If the word entered is <code>hi</code> (then <code>quit</code>), the program prints <code>The total number of characters is: 2</code>"
+                        },
+                        {
+                            "value": "while-loop:1",
+                            "text": "If the word entered is <code>hi</code> (then <code>quit</code>), the program prints <code>The total number of characters is: 0</code>"
+                        },
+                        {
+                            "value": "while-loop:2",
+                            "text": "If the word entered is <code>hi</code> (then <code>quit</code>), the program prints <code>The total number of characters is: 6</code>"
+                        }
+                    ]
+                },
+                {
+                    "type": "radiogroup",
+                    "name": "python_while loop_reaction",
+                    "visibleIf": "{python_while loop_answer} notempty",
+                    "title": "Which of the following best describes your experience with the preceding problem?",
+                    "choices": [
+                        {
+                            "value": "reaction:0",
+                            "text": "I did not understand the problem or did not know how to begin solving it."
+                        },
+                        {
+                            "value": "reaction:1",
+                            "text": "I was able to begin solving the problem but got stuck."
+                        },
+                        {
+                            "value": "reaction:2",
+                            "text": "I was able to complete the problem but struggled greatly."
+                        },
+                        {
+                            "value": "reaction:3",
+                            "text": "I was able to solve the problem with a little difficulty."
+                        },
+                        {
+                            "value": "reaction:4",
+                            "text": "I was able to solve the problem with no difficulty."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "code-dictionaries",
+            "title": "Code Assessment: Dictionaries",
+            "visibleIf": "{concepts_state} >= 3",
+            "description": "Given the following code, answer the following questions:",
+            "elements": [
+                {
+                    "type": "html",
+                    "name": "python_dictionaries",
+                    "html": "<pre><code class=\"language-python hljs\">dict1 = {\n \"a\": {\"apple\", \"avocado\", \"apricot\"},\n \"b\": {\"banana\", \"blueberry\", \"blackberry\"},\n \"c\": {\"cherry\", \"cranberry\", \"citrus\"}\n}\n\ndict2 = {}\n\nfor key in dict1:\n for n in dict1[key]:\n dict2[n] = key\n\nprint(dict2)</code></pre>"
+                },
+                {
+                    "type": "radiogroup",
+                    "name": "python_dictionaries_answer",
+                    "title": "What is the output?",
+                    "choices": [
+                        {
+                            "value": "dictionaries:0",
+                            "text": "<code>{'avocado': 'a', 'apple': 'a', 'apricot': 'a', 'banana': 'b', 'blueberry': 'b', 'blackberry': 'b', 'cherry': 'c', 'cranberry': 'c', 'citrus': 'c'}</code>"
+                        },
+                        {
+                            "value": "dictionaries:1",
+                            "text": "<code>{'a': 'apricot', 'b': 'blackberry', 'c': 'citrus'}</code>"
+                        },
+                        {
+                            "value": "dictionaries:2",
+                            "text": "<code>{'a': {'apple', 'avocado', 'apricot'}, 'b': {'banana', 'blueberry', 'blackberry'}, 'c': {'cherry', 'cranberry', 'citrus'}}</code>"
+                        }
+                    ]
+                },
+                {
+                    "type": "radiogroup",
+                    "name": "python_dictionaries_reaction",
+                    "visibleIf": "{python_dictionaries_answer} notempty",
+                    "title": "Which of the following best describes your experience with the preceding problem?",
+                    "choices": [
+                        {
+                            "value": "reaction:0",
+                            "text": "I did not understand the problem or did not know how to begin solving it."
+                        },
+                        {
+                            "value": "reaction:1",
+                            "text": "I was able to begin solving the problem but got stuck."
+                        },
+                        {
+                            "value": "reaction:2",
+                            "text": "I was able to complete the problem but struggled greatly."
+                        },
+                        {
+                            "value": "reaction:3",
+                            "text": "I was able to solve the problem with a little difficulty."
+                        },
+                        {
+                            "value": "reaction:4",
+                            "text": "I was able to solve the problem with no difficulty."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "code-return-values",
+            "title": "Code Assessment: Return Values",
+            "visibleIf": "{concepts_state} >= 3",
+            "description": "Given the following code, answer the following questions:",
+            "elements": [
+                {
+                    "type": "html",
+                    "name": "python_return values",
+                    "html": "<pre><code class=\"language-python hljs\">def apply_discount(price, discount):\n    saving = price * discount\n    final = price - saving\n    return final\n\nresult = apply_discount(80, 0.25)\nprint(result)</code></pre>"
+                },
+                {
+                    "type": "radiogroup",
+                    "name": "python_return values_answer",
+                    "title": "What is the output?",
+                    "choices": [
+                        {
+                            "value": "return:0",
+                            "text": "60.0"
+                        },
+                        {
+                            "value": "return:1",
+                            "text": "20.0"
+                        },
+                        {
+                            "value": "return:2",
+                            "text": "<code>None</code>"
+                        }
+                    ]
+                },
+                {
+                    "type": "radiogroup",
+                    "name": "python_return values_reaction",
+                    "visibleIf": "{python_return values_answer} notempty",
+                    "title": "Which of the following best describes your experience with the preceding problem?",
+                    "choices": [
+                        {
+                            "value": "reaction:0",
+                            "text": "I did not understand the problem or did not know how to begin solving it."
+                        },
+                        {
+                            "value": "reaction:1",
+                            "text": "I was able to begin solving the problem but got stuck."
+                        },
+                        {
+                            "value": "reaction:2",
+                            "text": "I was able to complete the problem but struggled greatly."
+                        },
+                        {
+                            "value": "reaction:3",
+                            "text": "I was able to solve the problem with a little difficulty."
+                        },
+                        {
+                            "value": "reaction:4",
+                            "text": "I was able to solve the problem with no difficulty."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "code-advanced",
+            "title": "Code Assessment: Advanced Concepts",
+            "visibleIf": "{concepts_state} >= 3",
+            "description": "Given the following code, answer the following questions:",
+            "elements": [
+                {
+                    "type": "html",
+                    "name": "python_advanced",
+                    "html": "<pre><code class=\"language-python hljs\">values = [\"hello\", \"banana\", \"lime\", \"lemon\", \"apple\", \"strawberry\", \"grape\", \"kiwi\"]\nmystery1 = mystery(3, values)\nprint(\"Mystery 1:\", mystery1)\nmystery2 = mystery(5, values)\nprint(\"Mystery 2:\", mystery2)\n\npairs = {}\nfor i in range(0, len(values), 2):\n    pairs[values[i]] = values[i + 1]\n\nprint(pairs)</code></pre>"
+                },
+                {
+                    "type": "radiogroup",
+                    "name": "python_advanced_answer",
+                    "title": "What is the output?",
+                    "choices": [
+                        {
+                            "value": "advanced:0",
+                            "text": "<pre>Mystery 1: False\nMystery 2: True\n{'banana': 'hello', 'lemon': 'lime', 'strawberry': 'apple', 'kiwi': 'grape'}</pre>"
+                        },
+                        {
+                            "value": "advanced:1",
+                            "text": "<pre>Mystery 1: True\nMystery 2: False\n{'hello': 'banana', 'lime': 'lemon', 'apple': 'strawberry', 'grape': 'kiwi'}</pre>"
+                        },
+                        {
+                            "value": "advanced:2",
+                            "text": "<pre>Mystery 1: False\nMystery 2: True\n{'hello': 'banana', 'lime': 'lemon', 'apple': 'strawberry', 'grape': 'kiwi'}</pre>"
+                        }
+                    ]
+                },
+                {
+                    "type": "radiogroup",
+                    "name": "python_advanced_reaction",
+                    "visibleIf": "{python_advanced_answer} notempty",
+                    "title": "Which of the following best describes your experience with the preceding problem?",
+                    "choices": [
+                        {
+                            "value": "reaction:0",
+                            "text": "I did not understand the problem or did not know how to begin solving it."
+                        },
+                        {
+                            "value": "reaction:1",
+                            "text": "I was able to begin solving the problem but got stuck."
+                        },
+                        {
+                            "value": "reaction:2",
+                            "text": "I was able to complete the problem but struggled greatly."
+                        },
+                        {
+                            "value": "reaction:3",
+                            "text": "I was able to solve the problem with a little difficulty."
+                        },
+                        {
+                            "value": "reaction:4",
+                            "text": "I was able to solve the problem with no difficulty."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "No Experience",
             "title": "Placement Section A",
-            "visibleIf": "{state} <= 1",
+            "visibleIf": "{preliminary_state} == 0",
             "elements": [
                 {
                     "type": "expression",
@@ -444,9 +755,9 @@
             ]
         },
         {
-            "name": "page9",
+            "name": "Limited Experience",
             "title": "Placement Section A",
-            "visibleIf": "{state} > 1 and {state} < 3",
+            "visibleIf": "{preliminary_state} == 1",
             "elements": [
                 {
                     "type": "html",
@@ -464,9 +775,9 @@
             ]
         },
         {
-            "name": "page10",
+            "name": "Refresher",
             "title": "Placement Section A",
-            "visibleIf": "{state} >= 3 and {state} <= 5",
+            "visibleIf": "{concepts_state} notempty and {concepts_state} < 4",
             "elements": [
                 {
                     "type": "html",
@@ -484,9 +795,9 @@
             ]
         },
         {
-            "name": "page11",
+            "name": "Advanced",
             "title": "Placement Section B",
-            "visibleIf": "{state} > 6",
+            "visibleIf": "{examples_state} notempty and {examples_state} >= 8",
             "elements": [
                 {
                     "type": "html",
@@ -504,7 +815,7 @@
             ]
         },
         {
-            "name": "page12",
+            "name": "Thank You",
             "title": "Thank You",
             "elements": [
                 {
@@ -520,8 +831,23 @@
     "completedHtml": "<h2>Feel free to reach out with any questions!</h2><p>Contact: <a href=\"mailto:informationsystemsandstatistics@baruch.cuny.edu?subject=CIS 2300 Self-Placement Question\">informationsystemsandstatistics@baruch.cuny.edu</a></p>",
     "calculatedValues": [
         {
-            "name": "state",
-            "expression": "determineState({Previous Course}, {Previous AP IB Course}, {Previous Experience}, {AP CS A Score}, {IB Score}, {concepts_n}, {examples_n})",
+            "name": "preliminary_state",
+            "expression": "calculatePreliminaryState({Previous AP IB Course}, {AP CS A Score}, {IB Score}, {Previous Course}, {Previous Experience})",
+            "defaultValue": null
+        },
+        {
+            "name": "concepts_state",
+            "expression": "determineConceptsState({vars}, {datatypes}, {conditionals}, {loops}, {lists}, {functions and methods}, {file i/o}, {dictionaries})",
+            "defaultValue": null
+        },
+        {
+            "name": "examples_state",
+            "expression": "determineExamplesState({python_conditionals_answer, {python_for_loop_answer}, {python_while_loop_answer}, {python_dictionaries_answer}, {python_return_values_answer}, {python_advanced_answer})",
+            "defaultValue": null
+        },
+        {
+            "name": "examples_feelings_state",
+            "expression": "determineExamplesFeelingsState({python_conditionals_reaction}, {python_for_loop_reaction}, {python_while_loop_reaction}, {python_dictionaries_reaction}, {python_return_values_reaction}, {python_advanced_reaction})",
             "defaultValue": null
         }
     ]
