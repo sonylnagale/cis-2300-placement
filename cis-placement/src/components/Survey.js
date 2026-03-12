@@ -256,6 +256,10 @@ export default function SurveyComponent() {
   });
 
   const [survey] = useState(new Model(model));
+  const [conceptsState, setConceptsState] = useState(null);
+  const [examplesState, setExamplesState] = useState(null);
+  const [examplesFeelingsState, setExamplesFeelingsState] = useState(null);
+  
   const [debugOpen, setDebugOpen] = useState(true);
 
   // Data presets that satisfy each page's visibleIf condition.

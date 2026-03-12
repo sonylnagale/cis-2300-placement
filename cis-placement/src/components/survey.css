@@ -2,3 +2,10 @@ code.language-python.hljs {
     tab-size: 2 !important;
 }
 
+.survey .sd-page .sd-page__title {
+    --page-title-font-size: var(--sjs-font-pagetitle-size, calc(2 * (var(--sjs-font-size, 16px))));
+}
+
+.sd-html h2 {
+    font-size: var(--sjs-font-pagetitle-size, calc(1.5 *var(--sjs-font-size, 16px)));
+}
