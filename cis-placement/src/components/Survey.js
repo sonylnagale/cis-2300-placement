@@ -13,9 +13,6 @@ import python from 'highlight.js/lib/languages/python';
 import MarkdownIt from 'markdown-it';
 import model from './model.json';
 
-import '@/components/survey.css';
-
-
 hljs.registerLanguage('python', python);
 
 const GOOD_BACKGROUND = {
@@ -49,7 +46,6 @@ let _debugJump = null;
 
 
 export default function SurveyComponent() {
-
   const [preliminaryState, setPreliminaryState] = useState(null);
   const [conceptsState, setConceptsState] = useState(null);
   const [examplesState, setExamplesState] = useState(null);
@@ -75,6 +71,14 @@ export default function SurveyComponent() {
     });
 
     survey.onCurrentPageChanged.add((_, options) => {
+
+      setTimeout(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }, 50)
+
       // window.location.hash = options.newCurrentPage.jsonObj.name;
       survey.currentPage.elementsValue.forEach(async (el) => {
         // make sure the code questions get a fresh highlight when visible

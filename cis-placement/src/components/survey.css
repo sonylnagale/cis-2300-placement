@@ -2,6 +2,13 @@
     position: relative;
     margin-top: 100px;
     padding-bottom: var(--site-footer-h, 5rem);
+    background-color: #eee;
+}
+.sd-page .sd-page__description {
+    color: #333;
+}
+
+.sd-question:not([data-name="Background"]):not([data-name="Introduction"]) {
     background-color: #ddd;
 }
 
@@ -23,8 +30,27 @@ code.language-python.hljs {
     tab-size: 2 !important;
 }
 
-.survey .sd-page .sd-page__title {
-    --page-title-font-size: var(--sjs-font-pagetitle-size, calc(2 * (var(--sjs-font-size, 16px))));
+.sd-boolean__thumb {
+    background-color: #0002;
+}
+.survey .sv-header__title .sd-title {
+    /* --page-title-font-size: var(--sjs-font-pagetitle-size, calc(2 * (var(--sjs-font-size, 16px)))); */
+    --page-title-font-size: 1.5rem;
+    font-size: var(--page-title-font-size);
+    text-transform: uppercase;
+    line-height: 1;
+    position: relative;
+    top: 1rem;
+}
+.sv-header--height-auto .sv-header__content {
+    padding-left: 30px;
+    padding-top: 0;
+    display: inline-block;
+}
+
+.sv-header .sv-header__cell-content,
+.sv-header__cell--bottom {
+    width: var(--col-left-w, 14.5vw) !important;
 }
 
 .sd-html h2 {
@@ -46,89 +72,157 @@ code.language-python.hljs {
     }
 }
 
-.sd-progress-buttons {
-    position: fixed;
-    /* left: 10rem; */
-    margin-left: 2rem;
-    top: calc(var(--site-header-h, 5rem) + var(--survey-title-h, 88px));
-    padding: 0 0 0 1.5rem;
+/* ─────────────────────────────────────────────────────────────────────────────
+   Desktop: 1/3 left column (title + progress) / 2/3 right column (body)
+   ───────────────────────────────────────────────────────────────────────── */
+:root {
+    /* 2×sd-page-vertical-padding (24px each) + h3 line-height (40px) */
+    --survey-title-h: 150px;
 }
 
-.sd-progress-buttons__list-container {
-    width: 45%;
+@media (min-width: 769px) {
+    /* Positioning context for the absolutely-placed progress bar */
+    .sd-container-modern {
+        position: relative !important;
+        display: grid !important;
+        grid-template-columns: var(--col-left-w) 1fr !important;
+        align-items: start !important;
+    }
+
+    /* Left col: survey title — sticky */
+    .sd-container-modern__title {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+        position: sticky !important;
+        top: var(--site-header-h, 5rem) !important;
+        align-self: start !important;
+        z-index: 100 !important;
+        background: #ffffff !important;
+        box-sizing: border-box !important;
+        border-right: 1px solid #d0d0d0 !important;
+    }
+
+    /* Right col: body (progress is pulled out of flow below) */
+    .sv-components-row {
+        grid-column: 2 !important;
+        grid-row: 1 !important;
+        width: auto !important;
+        min-width: 0 !important;
+    }
+
+    /* Absolutely position progress under the title in the left column */
+    .sv-components-container-center {
+        position: absolute !important;
+        left: 0 !important;
+        top: var(--survey-title-h, 150px) !important;
+        width: var(--col-left-w) !important;
+        z-index: 99 !important;
+        border-right: 1px solid #d0d0d0 !important;
+        box-sizing: border-box !important;
+    }
+    .sv-components-container-center::before {
+        display: none !important;
+    }
+    .sd-progress-buttons {
+        width: calc(var(--col-left-w) - 3rem) !important;
+        top: calc(var(--survey-title-h) + 1rem) !important;
+        margin-left: 0 !important;
+        padding: calc(4 * (var(--sjs-base-unit, var(--base-unit, 8px))))
+            calc(5 * (var(--sjs-base-unit, var(--base-unit, 8px))))
+            calc(2 * (var(--sjs-base-unit, var(--base-unit, 8px))))
+            calc(4 * (var(--sjs-base-unit, var(--base-unit, 8px))));
+    }
+
+    /* Body fills right col */
+    .sd-body.sd-body--static {
+        max-width: 70% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-top: 1rem !important;
+    }
+}
+
+.sv-header,
+.sd-progress-buttons {
+    position: fixed;
+}
+
+/* Tablet + mobile: revert to stacked layout */
+@media (max-width: 768px) {
+    .sv-header {
+        position: static;
+        left: auto;
+    }
+
+    .sd-container-modern__title {
+        position: sticky !important;
+        left: auto !important;
+        width: 100% !important;
+        min-height: auto !important;
+        border-right: none !important;
+        top: var(--site-header-h, 5rem) !important;
+        background: #ffffff !important;
+    }
+
+    .sd-progress-buttons {
+        position: sticky !important;
+        left: auto !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        border-right: none !important;
+        top: calc(var(--site-header-h, 5rem) + var(--survey-title-h, 88px)) !important;
+        background: #f3f3f3 !important;
+    }
+
+    .sv-components-row {
+        margin-left: 0 !important;
+    }
+
+    .sv-components-container-center {
+        position: sticky !important;
+        top: calc(var(--site-header-h, 1rem) + 10px) !important;
+        z-index: 99 !important;
+        background: #f3f3f3 !important;
+        max-width: 80%;
+        padding: calc(3 * (var(--sjs-base-unit, var(--base-unit, 4px))));
+    }
+
+    .sd-body.sd-body--static {
+        max-width: calc(90 * (var(--sjs-base-unit, var(--base-unit, 15px)))) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+}
+.survey .sd-root-modern--mobile .sd-body.sd-body--static {
+    padding-top: 3rem;
 }
 
 @media (max-width: 520px) {
-    /* Progress buttons: full-width below the (now full-width) survey title */
     .sd-progress-buttons {
-        left: 0 !important;
-        margin-left: 0 !important;
-        width: 100% !important;
         padding: 0 0.85rem !important;
-        top: calc(var(--site-header-h, 60px) + var(--survey-title-h, 72px) + 1rem) !important;
     }
 
     .sd-progress-buttons__list-container {
         width: 100%;
     }
 
-    /* Body needs clearance for: site header + survey title + progress buttons */
     .survey {
-        margin-top: calc(var(--site-header-h, 60px) + var(--survey-title-h, 72px) + 80px);
+        /* margin-top: calc(var(--site-header-h, 60px) + 80px); */
     }
 }
-
-@media (max-width: 768px) {
-    .sv-header {
-        position: static;
-        left: auto;
-    }
-}
-
-/* ── Sticky survey title + progress bar ──────────────────────────────────────
-   Title height = 2×(sd-page-vertical-padding) + h3 line-height
-   Desktop (base-unit 8px): 2×24px + 40px = 88px
-   Mobile  (base-unit 8px, SurveyJS mobile mode ≤600px): 2×16px + 40px = 72px
-   ──────────────────────────────────────────────────────────────────────── */
-:root {
-    --survey-title-h: 88px;
-}
-
-/* SurveyJS switches to mobile padding at its own --sd-mobile-width: 600px */
-@media (max-width: 600px) {
-    :root {
-        --survey-title-h: 72px;
-    }
-}
-
-/* Survey title sticks right below the site header */
-.sd-container-modern__title {
-    position: sticky !important;
-    top: var(--site-header-h, 5rem) !important;
-    z-index: 100 !important;
-    background-color: var(--sjs-general-backcolor, #fff) !important;
+/* 
+.sd-root-modern--mobile .sd-body.sd-body--responsive, .sd-root-modern--mobile .sd-body.sd-body--static
+{
+    padding: 0 1rem !important;
+} */
+.sv-header >.sv-header--mobile{
+    padding-top: 0 !important;
 }
 
 .sv-header__content--static {
-    max-width: none;
+    width: var(--col-left-w);
 }
 
-/* .sv-components-container-center is the actual sticky wrapper SurveyJS uses
-   for the progress bar when progressBarLocation="belowHeader".
-   SurveyJS sets top: 0 on it — override to sit below title + site header. */
-.sv-components-container-center {
-    top: calc(var(--site-header-h, 5rem) + var(--survey-title-h, 88px)) !important;
-    z-index: 99 !important;
-    background: #f3f3f3 !important;
-}
-.sv-components-container-center::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: -100vw;
-    right: -100vw;
-    background: #f3f3f3;
-    z-index: -1;
-    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.08);
+.sd-btn {
+    border: 1px solid #05336b33;
 }
