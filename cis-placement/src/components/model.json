@@ -757,7 +757,7 @@
         {
             "name": "Limited Experience",
             "title": "Placement Section A",
-            "visibleIf": "{#finish} != true and ({#preliminary_state} + {#concepts_state} <= 3)",
+            "visibleIf": "{#finish} != true and ({#preliminary_state} + {#concepts_state} <= 3) and ({#preliminary_state} + {#concepts_state} > 0)",
             "elements": [
                 {
                     "type": "html",

@@ -90,7 +90,6 @@ test.describe.parallel('Experience Flow', () => {
         await expect(completeText).toBeVisible({ timeout: 5000 });
 
         await screenshot(step);
-        await clickNext();
 
         step++;
 
