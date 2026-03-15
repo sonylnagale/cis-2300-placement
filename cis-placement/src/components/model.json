@@ -692,15 +692,15 @@
                     "choices": [
                         {
                             "value": "advanced:0",
-                            "text": "<pre>Mystery 1: False\nMystery 2: True\n{'banana': 'hello', 'lemon': 'lime',\n\t\t'strawberry': 'apple', 'kiwi': 'grape'}</pre>"
+                            "text": "<code>Mystery 1: False<br/>Mystery 2: True<br/>{'banana': 'hello', 'lemon': 'lime','strawberry': 'apple', 'kiwi': 'grape'}</code>"
                         },
                         {
                             "value": "advanced:1",
-                            "text": "<pre>Mystery 1: True\nMystery 2: False\n{'hello': 'banana', 'lime': 'lemon',\n\t\t'apple': 'strawberry', 'grape': 'kiwi'}</pre>"
+                            "text": "<code>Mystery 1: True<br/>Mystery 2: False<br/>{'hello': 'banana', 'lime': 'lemon', 'apple': 'strawberry', 'grape': 'kiwi'}</code>"
                         },
                         {
                             "value": "advanced:2",
-                            "text": "<pre>Mystery 1: False\nMystery 2: True\n{'hello': 'banana', 'lime': 'lemon',\n\t\t'apple': 'strawberry', 'grape': 'kiwi'}</pre>"
+                            "text": "<code>Mystery 1: False<br/>Mystery 2: True<br/>{'hello': 'banana', 'lime': 'lemon', 'apple': 'strawberry', 'grape': 'kiwi'}</code>"
                         }
                     ]
                 },
@@ -737,14 +737,14 @@
         {
             "name": "No Experience",
             "title": "Placement Section A",
-            "visibleIf": "{preliminary_state} == 0",
+            "visibleIf": "{#Previous AP IB Course} = false and {#preliminary_state} = 0 and {#concepts_state} = 0",
             "elements": [
                 {
                     "type": "expression",
                     "name": "finish",
                     "expression": true,
                     "visible": false,
-                    "defaultValue": true
+                    "defaultValue": false
                 },
                 {
                     "type": "html",
@@ -757,7 +757,7 @@
         {
             "name": "Limited Experience",
             "title": "Placement Section A",
-            "visibleIf": "{preliminary_state} == 1",
+            "visibleIf": "{#finish} != true and ({#preliminary_state} + {#concepts_state} <= 3)",
             "elements": [
                 {
                     "type": "html",
@@ -770,14 +770,14 @@
                     "name": "finish",
                     "expression": true,
                     "visible": false,
-                    "defaultValue": true
+                    "defaultValue": false
                 }
             ]
         },
         {
             "name": "Refresher",
             "title": "Placement Section A",
-            "visibleIf": "{concepts_state} notempty and {concepts_state} < 4",
+            "visibleIf": "{#finish} != true and {#preliminary_state} + {#concepts_state} <= 5 and {#concepts_state} + {#preliminary_state} > 3",
             "elements": [
                 {
                     "type": "html",
@@ -790,14 +790,14 @@
                     "name": "finish",
                     "expression": true,
                     "visible": false,
-                    "defaultValue": true
+                    "defaultValue": false
                 }
             ]
         },
         {
             "name": "Advanced",
             "title": "Placement Section B",
-            "visibleIf": "{examples_state} notempty and {examples_state} >= 8",
+            "visibleIf": "{#finish} != true and ({#examples_state}  + {#concepts_state} >= 5)",
             "elements": [
                 {
                     "type": "html",
@@ -810,13 +810,14 @@
                     "name": "finish",
                     "expression": true,
                     "visible": false,
-                    "defaultValue": true
+                    "defaultValue": false
                 }
             ]
         },
         {
             "name": "Thank You",
             "title": "Thank You",
+            "visibleIf": "{#finish} = true",
             "elements": [
                 {
                     "type": "html",

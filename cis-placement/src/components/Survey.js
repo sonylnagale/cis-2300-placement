@@ -48,9 +48,68 @@ const CORRECT_ANSWERS = {
 // can return values that satisfy that specific page's visibleIf condition.
 let _debugJump = null;
 
+
 export default function SurveyComponent() {
 
+  const [preliminaryState, setPreliminaryState] = useState(null);
+  const [conceptsState, setConceptsState] = useState(null);
+  const [examplesState, setExamplesState] = useState(null);
+  const [examplesFeelingsState, setExamplesFeelingsState] = useState(null);
+
+  const [debugOpen, setDebugOpen] = useState(true);
+  const [survey] = useState(() => new Model(model));
+
+  useEffect(() => {
+    const converter = MarkdownIt({
+      html: true,
+    });
+
+    survey.onTextMarkdown.add((_, options) => {
+      options.html = converter.renderInline(options.text);
+
+    });
+
+    survey.onUpdateQuestionCssClasses.add((_, options) => {
+      if (options.question.getType() === "html" && (options.question.getPlainData().name !== "Introduction" && options.question.getPlainData().name !== "Background" && options.question.getPlainData().title !== "2300")) {
+        options.cssClasses.root = "question-root";
+      }
+    });
+
+    survey.onCurrentPageChanged.add((_, options) => {
+      // window.location.hash = options.newCurrentPage.jsonObj.name;
+      survey.currentPage.elementsValue.forEach(async (el) => {
+        // make sure the code questions get a fresh highlight when visible
+        if (el instanceof QuestionHtmlModel) {
+          try {
+            const value = await waitForProperty(el, 'react');
+
+            value.rootRef.current.querySelectorAll("pre code").forEach((block) => {
+              delete block.dataset.highlighted;
+            });
+
+            const node = value.rootRef.current.querySelector("pre code");
+            if (node) {
+              setTimeout(() => {
+                hljs.highlightElement(value.rootRef.current.querySelector("pre code"));
+              }, 10);
+            }
+
+          } catch (error) {
+            // silent
+          }
+        }
+      });
+    });
+
+    survey.onValueChanged.add(saveData);
+    survey.onUIStateChanged.add(saveData);
+
+    window.survey = survey;
+
+  }, [survey]);
+
   function calculateConceptsScore(data) {
+    console.log(data);
     let totalScore = 0;
     data.forEach((item) => {
       if (item > 2)
@@ -87,7 +146,8 @@ export default function SurveyComponent() {
       state += 2;
     }
 
-    return `${state}`;
+    setPreliminaryState(state);
+    return state;
   }
 
   // Returns average comfort score (0–4) across the 8 topic self-ratings.
@@ -165,6 +225,7 @@ export default function SurveyComponent() {
       }
     });
 
+    setConceptsState(score);
     return score;
   }
 
@@ -176,7 +237,6 @@ export default function SurveyComponent() {
       return _debugJump === 'Advanced' ? 12 : 0;
     }
 
-    console.log(data, 'data')
     // {python-conditionals-answer}, {python-for loop-answer}, {python-while loop-answer}, {python-dictionaries-answer}, {python-return values-answer}, {python-advanced-answer}
     const map = {
       "conditionals": {
@@ -221,13 +281,16 @@ export default function SurveyComponent() {
       }
     });
 
+    setExamplesState(score);
     return score;
   }
 
   // Returns sum of reaction scores across the 6 code problems (0/1/2 each, max 12).
   // Higher = student felt more confident solving the examples.
   function determineExamplesFeelingsState(data) {
-    return data.reduce((sum, v) => sum + (+v || 0), 0);
+    const score = data.reduce((sum, v) => sum + (+v || 0), 0);
+    setExamplesFeelingsState(score);
+    return score;
   }
 
   registerFunction({
@@ -255,13 +318,6 @@ export default function SurveyComponent() {
     func: determineExamplesFeelingsState
   });
 
-  const [survey] = useState(new Model(model));
-  const [conceptsState, setConceptsState] = useState(null);
-  const [examplesState, setExamplesState] = useState(null);
-  const [examplesFeelingsState, setExamplesFeelingsState] = useState(null);
-  
-  const [debugOpen, setDebugOpen] = useState(true);
-
   // Data presets that satisfy each page's visibleIf condition.
   // Keys match question `name` fields in model.json.
   const PAGE_PRESETS = {
@@ -278,11 +334,11 @@ export default function SurveyComponent() {
     },
     // concepts_state >= 3 → all topics 'entirely comfortable' (4)
     'code-conditionals': { ...GOOD_BACKGROUND, ...HIGH_CONCEPTS },
-    'code-for-loop':      { ...GOOD_BACKGROUND, ...HIGH_CONCEPTS, python_conditionals_reaction: 'reaction:4' },
-    'code-while-loop':    { ...GOOD_BACKGROUND, ...HIGH_CONCEPTS },
-    'code-dictionaries':  { ...GOOD_BACKGROUND, ...HIGH_CONCEPTS },
+    'code-for-loop': { ...GOOD_BACKGROUND, ...HIGH_CONCEPTS, python_conditionals_reaction: 'reaction:4' },
+    'code-while-loop': { ...GOOD_BACKGROUND, ...HIGH_CONCEPTS },
+    'code-dictionaries': { ...GOOD_BACKGROUND, ...HIGH_CONCEPTS },
     'code-return-values': { ...GOOD_BACKGROUND, ...HIGH_CONCEPTS },
-    'code-advanced':      { ...GOOD_BACKGROUND, ...HIGH_CONCEPTS },
+    'code-advanced': { ...GOOD_BACKGROUND, ...HIGH_CONCEPTS },
     // preliminary_state == 0: no AP/IB, no course, no experience
     'No Experience': {
       'Previous AP IB Course': false,
@@ -352,54 +408,6 @@ export default function SurveyComponent() {
     setTimeout(() => { _debugJump = null; }, 0);
   }
 
-  useEffect(() => {
-    const converter = MarkdownIt({
-      html: true,
-    });
-
-    survey.onTextMarkdown.add((_, options) => {
-      options.html = converter.renderInline(options.text);
-
-    });
-
-    survey.onUpdateQuestionCssClasses.add((_, options) => {
-      if (options.question.getType() === "html" && (options.question.getPlainData().name !== "Introduction" && options.question.getPlainData().name !== "Background" && options.question.getPlainData().title !== "2300")) {
-        options.cssClasses.root = "question-root";
-      }
-    });
-
-    survey.onCurrentPageChanged.add((_, options) => {
-      // window.location.hash = options.newCurrentPage.jsonObj.name;
-      survey.currentPage.elementsValue.forEach(async (el) => {
-        // make sure the code questions get a fresh highlight when visible
-        if (el instanceof QuestionHtmlModel) {
-          try {
-            const value = await waitForProperty(el, 'react');
-
-            value.rootRef.current.querySelectorAll("pre code").forEach((block) => {
-              delete block.dataset.highlighted;
-            });
-
-            const node = value.rootRef.current.querySelector("pre code");
-            if (node) {
-              setTimeout(() => {
-                hljs.highlightElement(value.rootRef.current.querySelector("pre code"));
-              }, 10);
-            }
-
-          } catch (error) {
-            // silent
-          }
-        }
-      });
-    });
-
-    survey.onValueChanged.add(saveData);
-    survey.onUIStateChanged.add(saveData);
-
-    window.survey = survey;
-
-  }, []);
 
   function waitForProperty(obj, propName, timeout = 3000) {
     return new Promise((resolve, reject) => {
@@ -526,8 +534,21 @@ export default function SurveyComponent() {
                 </button>
               ))}
             </div>
-            <div style={{ padding: '6px 10px', borderTop: '1px solid #313244', fontSize: '10px', color: '#6c7086' }}>
-              Sets prerequisite data then navigates.
+            <div style={{ padding: '6px 10px', borderTop: '1px solid #313244', fontSize: '10px' }}>
+              <div style={{ color: '#6c7086', marginBottom: '4px' }}>Sets prerequisite data then navigates.</div>
+              {[
+                ['preliminary', preliminaryState],
+                ['concepts', conceptsState],
+                ['examples', examplesState],
+                ['feelings', examplesFeelingsState],
+              ].map(([label, val]) => (
+                <div key={label} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: '#6c7086' }}>{label}</span>
+                  <span style={{ color: val == null ? '#45475a' : '#a6e3a1', fontWeight: 'bold' }}>
+                    {val == null ? '—' : String(val)}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         </>
