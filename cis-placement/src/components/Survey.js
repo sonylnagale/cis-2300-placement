@@ -13,7 +13,6 @@ import python from 'highlight.js/lib/languages/python';
 import MarkdownIt from 'markdown-it';
 import model from './model.json';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/components/survey.css';
 
 
@@ -288,7 +287,8 @@ export default function SurveyComponent() {
   // Returns sum of reaction scores across the 6 code problems (0/1/2 each, max 12).
   // Higher = student felt more confident solving the examples.
   function determineExamplesFeelingsState(data) {
-    const score = data.reduce((sum, v) => sum + (+v || 0), 0);
+    console.log(data)
+    const score = data.reduce((sum, v) => sum + (v && Number(v.split(":")[1]) || 0), 0);
     setExamplesFeelingsState(score);
     return score;
   }

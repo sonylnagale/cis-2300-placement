@@ -1,3 +1,24 @@
+.survey {
+    position: relative;
+    margin-top: 100px;
+    padding-bottom: var(--site-footer-h, 5rem);
+    background-color: #ddd;
+}
+
+/* Tablet: header stays single-row but may be slightly taller */
+@media (max-width: 768px) {
+    .survey {
+        margin-top: 88px;
+    }
+}
+
+/* Mobile: header stacks, needs more clearance */
+@media (max-width: 520px) {
+    .survey {
+        margin-top: 75px;
+    }
+}
+
 code.language-python.hljs {
     tab-size: 2 !important;
 }
@@ -7,5 +28,107 @@ code.language-python.hljs {
 }
 
 .sd-html h2 {
-    font-size: var(--sjs-font-pagetitle-size, calc(1.5 *var(--sjs-font-size, 16px)));
+    font-size: var(--sjs-font-pagetitle-size, calc(1.5 * var(--sjs-font-size, 16px)));
+}
+
+.sd-body.sd-body--static {
+    max-width: calc(90 * (var(--sjs-base-unit, var(--base-unit, 15px))));
+    /* padding-bottom: calc(10 * (var(--sjs-base-unit, var(--base-unit, 15px)))); */
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: calc(12 * (var(--sjs-base-unit, var(--base-unit, 8px))));
+}
+
+@media (max-width: 520px) {
+    .sd-body.sd-body--static {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+}
+
+.sd-progress-buttons {
+    position: fixed;
+    /* left: 10rem; */
+    margin-left: 2rem;
+    top: calc(var(--site-header-h, 5rem) + var(--survey-title-h, 88px));
+    padding: 0 0 0 1.5rem;
+}
+
+.sd-progress-buttons__list-container {
+    width: 45%;
+}
+
+@media (max-width: 520px) {
+    /* Progress buttons: full-width below the (now full-width) survey title */
+    .sd-progress-buttons {
+        left: 0 !important;
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 0 0.85rem !important;
+        top: calc(var(--site-header-h, 60px) + var(--survey-title-h, 72px) + 1rem) !important;
+    }
+
+    .sd-progress-buttons__list-container {
+        width: 100%;
+    }
+
+    /* Body needs clearance for: site header + survey title + progress buttons */
+    .survey {
+        margin-top: calc(var(--site-header-h, 60px) + var(--survey-title-h, 72px) + 80px);
+    }
+}
+
+@media (max-width: 768px) {
+    .sv-header {
+        position: static;
+        left: auto;
+    }
+}
+
+/* ── Sticky survey title + progress bar ──────────────────────────────────────
+   Title height = 2×(sd-page-vertical-padding) + h3 line-height
+   Desktop (base-unit 8px): 2×24px + 40px = 88px
+   Mobile  (base-unit 8px, SurveyJS mobile mode ≤600px): 2×16px + 40px = 72px
+   ──────────────────────────────────────────────────────────────────────── */
+:root {
+    --survey-title-h: 88px;
+}
+
+/* SurveyJS switches to mobile padding at its own --sd-mobile-width: 600px */
+@media (max-width: 600px) {
+    :root {
+        --survey-title-h: 72px;
+    }
+}
+
+/* Survey title sticks right below the site header */
+.sd-container-modern__title {
+    position: sticky !important;
+    top: var(--site-header-h, 5rem) !important;
+    z-index: 100 !important;
+    background-color: var(--sjs-general-backcolor, #fff) !important;
+}
+
+.sv-header__content--static {
+    max-width: none;
+}
+
+/* .sv-components-container-center is the actual sticky wrapper SurveyJS uses
+   for the progress bar when progressBarLocation="belowHeader".
+   SurveyJS sets top: 0 on it — override to sit below title + site header. */
+.sv-components-container-center {
+    top: calc(var(--site-header-h, 5rem) + var(--survey-title-h, 88px)) !important;
+    z-index: 99 !important;
+    background: #f3f3f3 !important;
+}
+.sv-components-container-center::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -100vw;
+    right: -100vw;
+    background: #f3f3f3;
+    z-index: -1;
+    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.08);
 }
