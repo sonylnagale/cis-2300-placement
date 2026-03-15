@@ -7,7 +7,7 @@
                 {
                     "type": "html",
                     "name": "Introduction",
-                    "html": "<h2>Welcome!</h2><p>We're excited that you are interested in taking an introductory programming course! Our <a target=\"_blank\" href=\"https://baruch-undergraduate.catalog.cuny.edu/courses/1473721\">CIS 2300 programming course</a> is designed for all students, regardless of how much prior experience you do or do not have and regardless of your goals or reasons for taking the course. In that spirit, we want everyone to have the best experience in your first course, especially since prior experience can come in many different forms. It can be intimidating to be in a class full of students with prior experience and conversely being seasoned in a room of beginners. Since we offer multiple sections of 2300, this anonymous self-placement will suggest the most appropriate section for you.</p>",
+                    "html": "<h2>Welcome!</h2><p>We're excited that you are interested in taking an introductory programming course! Our <a target=\"_blank\" href=\"https://baruch-undergraduate.catalog.cuny.edu/courses/1473721\">CIS 2300 programming course</a> is designed for all students, regardless of how much prior experience you do or do not have and regardless of your goals or reasons for taking the course. In that spirit, we want everyone to have the best experience in your first course, especially since prior experience can come in many different forms. It can be intimidating to be in a class full of students with prior experience and conversely, being seasoned in a room of beginners can be frustrating. Since we offer multiple sections of 2300, this anonymous self-placement will suggest the most appropriate section for you.</p>",
                     "class": "reset"
                 }
             ]
@@ -815,12 +815,13 @@
         },
         {
             "name": "Thank You",
-            "title": "Thank You",
             "visibleIf": "{#finish} = true",
             "elements": [
                 {
                     "type": "html",
-                    "html": "<h1>Thank you for completing the self-placement!</h1><p>If you have any questions about your placement or which course is right for you, please contact us at <a href=\"mailto:informationsystemsandstatistics@baruch.cuny.edu?subject=CIS 2300 Self-Placement Question\">informationsystemsandstatistics@baruch.cuny.edu</a></p>"
+                    "name": "thank you",
+                    "title": "Thank You",
+                    "html": "<h1>Thank you for completing the self-placement!</h1><p>If you have any questions about your placement or which course is right for you, please contact us at <a href=\"mailto:informationsystemsandstatistics@baruch.cuny.edu?subject=CIS 2300 Self-Placement Question\">informationsystemsandstatistics@baruch.cuny.edu</a>.</p>"
                 }
             ]
         }

@@ -157,8 +157,10 @@ export default function SurveyComponent() {
   // concepts_state >= 3 gates the Code Assessment page.
   function determineConceptsState(data) {
     if (_debugJump) {
-      // Refresher: notempty and < 4. Everything else needing code pages: >= 4.
-      return _debugJump === 'Refresher' ? 3 : 8;
+      if (_debugJump === 'Refresher') return 3;          // sum 4–5: needs concepts=3 with preliminary=2
+      if (_debugJump === 'No Experience') return 0;      // visibleIf: concepts_state = 0
+      if (_debugJump === 'Limited Experience') return 0; // visibleIf: sum <= 3 (preliminary=1, concepts=0)
+      return 8; // code pages (>=3 or >=4) and Advanced (examples+concepts>=5)
     }
     // {vars}, {datatypes}, {conditionals}, {loops}, {lists}, {functions and methods}, {file i/o}, {dictionaries}
 
@@ -357,24 +359,30 @@ export default function SurveyComponent() {
       'Previous Course': false,
       'Previous Experience': false,
     },
-    // preliminary_state >= 2, concepts_state notempty and < 4
+    // preliminary_state=2 (Course=true→+2) + concepts_state=3 (debug) = 5 → <=5 and >3
     'Refresher': {
-      preliminary_state: '2',
-      concepts_state: 3,
+      'Previous AP IB Course': false,
+      'Previous Course': true,
+      'Previous Experience': false,
     },
-    // examples_state >= 8
+    // examples_state=12 (debug) + concepts_state=8 (debug) = 20 ≥ 5; finish not set
     'Advanced': {
-      preliminary_state: '4',
-      concepts_state: 8,
-      examples_state: 8,
+      ...GOOD_BACKGROUND,
+      ...HIGH_CONCEPTS,
+      ...CORRECT_ANSWERS,
     },
-    'Thank You': {},
+    // finish=true makes the Thank You page naturally visible; jumpToPage clears it
+    // before each navigation so other result pages are never locked out.
+    'Thank You': { finish: true },
   };
 
   function jumpToPage(pageName) {
     const preset = PAGE_PRESETS[pageName] || {};
     _debugJump = pageName;
-    survey.data = { ...survey.data, ...preset };
+    // Strip transient debug state before applying the new preset so that
+    // finish:true from a previous Thank You jump doesn't lock out result pages.
+    const { finish: _discarded, ...cleanData } = survey.data;
+    survey.data = { ...cleanData, ...preset };
     const page = survey.getPageByName(pageName);
     if (!page) {
       _debugJump = null;
@@ -461,7 +469,7 @@ export default function SurveyComponent() {
     }
   }
 
-  const isDev = true; //process.env.NODE_ENV === 'development';
+  const isDev = false; //process.env.NODE_ENV === 'development' && process.env.CI !== 'true';
 
   const sidebarStyle = {
     position: 'fixed',

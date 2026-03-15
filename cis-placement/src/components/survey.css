@@ -1,40 +1,56 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   CSS Variables
+   ═══════════════════════════════════════════════════════════════════════════ */
+:root {
+    /* Measured height of .sd-container-modern__title; keeps progress pinned below it */
+    --survey-title-h: 150px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Survey Wrapper
+   ═══════════════════════════════════════════════════════════════════════════ */
 .survey {
     position: relative;
     margin-top: 100px;
     padding-bottom: var(--site-footer-h, 5rem);
     background-color: #eee;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SurveyJS Base Overrides
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Typography */
 .sd-page .sd-page__description {
     color: #333;
 }
 
-.sd-question:not([data-name="Background"]):not([data-name="Introduction"]) {
+.sd-html h2 {
+    font-size: var(--sjs-font-pagetitle-size, calc(1.5 * var(--sjs-font-size, 16px)));
+}
+
+/* Question cards */
+.sd-question:not([data-name="Background"]):not([data-name="Introduction"]):not([data-name="thank you"]) {
     background-color: #ddd;
 }
 
-/* Tablet: header stays single-row but may be slightly taller */
-@media (max-width: 768px) {
-    .survey {
-        margin-top: 88px;
-    }
+.sd-question[data-name="thank you"] a {
+    color: #05336b;
+    text-decoration: underline;
 }
 
-/* Mobile: header stacks, needs more clearance */
-@media (max-width: 520px) {
-    .survey {
-        margin-top: 75px;
-    }
+/* Toggle / boolean */
+.sd-boolean__thumb {
+    background-color: #0002;
 }
 
+/* Code blocks */
 code.language-python.hljs {
     tab-size: 2 !important;
 }
 
-.sd-boolean__thumb {
-    background-color: #0002;
-}
+/* Survey title text inside the sticky header */
 .survey .sv-header__title .sd-title {
-    /* --page-title-font-size: var(--sjs-font-pagetitle-size, calc(2 * (var(--sjs-font-size, 16px)))); */
     --page-title-font-size: 1.5rem;
     font-size: var(--page-title-font-size);
     text-transform: uppercase;
@@ -42,6 +58,8 @@ code.language-python.hljs {
     position: relative;
     top: 1rem;
 }
+
+/* SurveyJS header cell — matches left column width */
 .sv-header--height-auto .sv-header__content {
     padding-left: 30px;
     padding-top: 0;
@@ -53,43 +71,47 @@ code.language-python.hljs {
     width: var(--col-left-w, 14.5vw) !important;
 }
 
-.sd-html h2 {
-    font-size: var(--sjs-font-pagetitle-size, calc(1.5 * var(--sjs-font-size, 16px)));
+.sv-header__content--static {
+    width: var(--col-left-w);
 }
 
+/* Survey body default sizing (overridden per breakpoint below) */
 .sd-body.sd-body--static {
     max-width: calc(90 * (var(--sjs-base-unit, var(--base-unit, 15px))));
-    /* padding-bottom: calc(10 * (var(--sjs-base-unit, var(--base-unit, 15px)))); */
     margin-left: auto;
     margin-right: auto;
     padding-top: calc(12 * (var(--sjs-base-unit, var(--base-unit, 8px))));
 }
 
-@media (max-width: 520px) {
-    .sd-body.sd-body--static {
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-    }
+/* Sticky site header + progress bar — desktop default */
+.sv-header,
+.sd-progress-buttons {
+    position: fixed;
 }
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   Desktop: 1/3 left column (title + progress) / 2/3 right column (body)
-   ───────────────────────────────────────────────────────────────────────── */
-:root {
-    /* 2×sd-page-vertical-padding (24px each) + h3 line-height (40px) */
-    --survey-title-h: 150px;
+/* Mobile SurveyJS header padding reset */
+.sv-header > .sv-header--mobile {
+    padding-top: 0 !important;
 }
 
+/* Button border */
+.sd-btn {
+    border: 1px solid #05336b33;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Desktop  ≥769px  —  1/3 left (title + progress) / 2/3 right (body)
+   ═══════════════════════════════════════════════════════════════════════════ */
 @media (min-width: 769px) {
     /* Positioning context for the absolutely-placed progress bar */
     .sd-container-modern {
         position: relative !important;
-        display: grid !important;
-        grid-template-columns: var(--col-left-w) 1fr !important;
+        display: grid;
+        grid-template-columns: var(--col-left-w) 1fr;
         align-items: start !important;
     }
 
-    /* Left col: survey title — sticky */
+    /* Left col: survey title — sticky below site header */
     .sd-container-modern__title {
         grid-column: 1 !important;
         grid-row: 1 !important;
@@ -102,7 +124,7 @@ code.language-python.hljs {
         border-right: 1px solid #d0d0d0 !important;
     }
 
-    /* Right col: body (progress is pulled out of flow below) */
+    /* Right col: survey body */
     .sv-components-row {
         grid-column: 2 !important;
         grid-row: 1 !important;
@@ -110,22 +132,24 @@ code.language-python.hljs {
         min-width: 0 !important;
     }
 
-    /* Absolutely position progress under the title in the left column */
+    /* Progress bar: pulled out of flow, placed under the title in the left col */
     .sv-components-container-center {
         position: absolute !important;
         left: 0 !important;
         top: var(--survey-title-h, 150px) !important;
         width: var(--col-left-w) !important;
         z-index: 99 !important;
+        background: #ffffff !important;
         border-right: 1px solid #d0d0d0 !important;
         box-sizing: border-box !important;
     }
+
     .sv-components-container-center::before {
         display: none !important;
     }
+
     .sd-progress-buttons {
         width: calc(var(--col-left-w) - 3rem) !important;
-        top: calc(var(--survey-title-h) + 1rem) !important;
         margin-left: 0 !important;
         padding: calc(4 * (var(--sjs-base-unit, var(--base-unit, 8px))))
             calc(5 * (var(--sjs-base-unit, var(--base-unit, 8px))))
@@ -142,13 +166,14 @@ code.language-python.hljs {
     }
 }
 
-.sv-header,
-.sd-progress-buttons {
-    position: fixed;
-}
-
-/* Tablet + mobile: revert to stacked layout */
+/* ═══════════════════════════════════════════════════════════════════════════
+   Tablet  ≤768px
+   ═══════════════════════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
+    .survey {
+        margin-top: 88px;
+    }
+
     .sv-header {
         position: static;
         left: auto;
@@ -162,6 +187,15 @@ code.language-python.hljs {
         border-right: none !important;
         top: var(--site-header-h, 5rem) !important;
         background: #ffffff !important;
+    }
+
+    .sv-components-container-center {
+        position: sticky !important;
+        top: calc(var(--site-header-h, 1rem) + 10px) !important;
+        z-index: 99 !important;
+        background: #f3f3f3 !important;
+        max-width: 80%;
+        padding: calc(3 * (var(--sjs-base-unit, var(--base-unit, 4px))));
     }
 
     .sd-progress-buttons {
@@ -178,26 +212,30 @@ code.language-python.hljs {
         margin-left: 0 !important;
     }
 
-    .sv-components-container-center {
-        position: sticky !important;
-        top: calc(var(--site-header-h, 1rem) + 10px) !important;
-        z-index: 99 !important;
-        background: #f3f3f3 !important;
-        max-width: 80%;
-        padding: calc(3 * (var(--sjs-base-unit, var(--base-unit, 4px))));
-    }
-
     .sd-body.sd-body--static {
         max-width: calc(90 * (var(--sjs-base-unit, var(--base-unit, 15px)))) !important;
         margin-left: auto !important;
         margin-right: auto !important;
     }
-}
-.survey .sd-root-modern--mobile .sd-body.sd-body--static {
-    padding-top: 3rem;
+
+    .sd-root-modern--mobile .sd-body.sd-body--static {
+        padding-top: 3rem;
+    }
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   Mobile  ≤520px
+   ═══════════════════════════════════════════════════════════════════════════ */
 @media (max-width: 520px) {
+    .survey {
+        margin-top: 75px;
+    }
+
+    .sd-body.sd-body--static {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
     .sd-progress-buttons {
         padding: 0 0.85rem !important;
     }
@@ -205,24 +243,19 @@ code.language-python.hljs {
     .sd-progress-buttons__list-container {
         width: 100%;
     }
-
-    .survey {
-        /* margin-top: calc(var(--site-header-h, 60px) + 80px); */
-    }
 }
-/* 
-.sd-root-modern--mobile .sd-body.sd-body--responsive, .sd-root-modern--mobile .sd-body.sd-body--static
-{
-    padding: 0 1rem !important;
-} */
-.sv-header >.sv-header--mobile{
-    padding-top: 0 !important;
-}
-
-.sv-header__content--static {
-    width: var(--col-left-w);
+.sd-container-modern .sd-completedpage {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    width: auto !important;
+    min-width: 0 !important;
+    width: 100%;
+    display: block;
+    grid-template-columns: unset !important;
+    text-align: left;
+    margin-left: 2rem;
 }
 
-.sd-btn {
-    border: 1px solid #05336b33;
+.sd-container-modern .sd-completedpage a {
+    text-decoration: underline;
 }
