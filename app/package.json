@@ -12,10 +12,18 @@
     "test:screenshots": "SCREENSHOTS=true playwright test"
   },
   "devDependencies": {
+    "@aws-amplify/backend": "^1.21.1",
+    "@aws-amplify/backend-cli": "^1.8.2",
     "@playwright/test": "^1.44.0",
-    "pdf2svg": "^0.1.2"
+    "aws-cdk-lib": "^2.234.1",
+    "constructs": "^10.5.1",
+    "esbuild": "^0.27.4",
+    "pdf2svg": "^0.1.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
+    "aws-amplify": "^6.16.3",
     "bootstrap": "^5.3.8",
     "highlight.js": "^11.11.1",
     "markdown-it": "^14.1.1",
