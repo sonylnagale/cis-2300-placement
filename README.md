@@ -1,3 +1,3 @@
-# cis-2300-placement
+# CIS 2300 Placement Survey
 
-https://github.com/surveyjs/survey-library
+Based on surveyjs.
