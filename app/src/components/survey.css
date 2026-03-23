@@ -6,6 +6,98 @@
     --survey-title-h: 150px;
 }
 
+.intro {
+    position: relative;
+    margin-top: 130px;
+    padding-bottom: var(--site-footer-h, 5rem);
+    background-color: #eee;
+}
+
+.intro a {
+    color: #05336b;
+    text-decoration: underline;
+}
+
+.intro p {
+    max-width: 850px;
+    margin-right: auto;
+    font-size: 1.125rem;
+    line-height: 1.6;
+}
+
+.intro form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    margin-top: 1.5rem;
+}
+
+.intro .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.intro .field label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--baruch);
+    letter-spacing: 0.01em;
+}
+
+.intro .field input {
+    padding: 0.55rem 0.85rem;
+    border: 1.5px solid #b0bec5;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+    background: #fff;
+    transition: border-color 0.18s;
+    color: #222;
+    max-width: 20rem;
+}
+
+.intro .field input:focus {
+    outline: none;
+    border-color: var(--baruch);
+    box-shadow: 0 0 0 3px rgba(5, 51, 107, 0.12);
+}
+
+.intro .actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 0.5rem;
+}
+
+.intro .submit {
+    padding: 0.6rem 1.75rem;
+    background-color: var(--baruch);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.18s;
+}
+
+.intro .submit:hover {
+    background-color: #082f5e;
+}
+
+.intro .submit:active {
+    background-color: #051e3e;
+}
+
+.privacy {
+    font-size: 0.8rem;
+    color: #666;
+    text-decoration: underline;
+}
+
+
 /* ═══════════════════════════════════════════════════════════════════════════
    Survey Wrapper
    ═══════════════════════════════════════════════════════════════════════════ */
@@ -104,7 +196,8 @@ code.language-python.hljs {
    ═══════════════════════════════════════════════════════════════════════════ */
 @media (min-width: 769px) {
     /* Positioning context for the absolutely-placed progress bar */
-    .sd-container-modern {
+    .sd-container-modern,
+    .intro {
         position: relative !important;
         display: grid;
         grid-template-columns: var(--col-left-w) 1fr;

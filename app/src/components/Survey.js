@@ -45,14 +45,16 @@ const CORRECT_ANSWERS = {
 let _debugJump = null;
 
 
-export default function SurveyComponent() {
+export default function SurveyComponent({ submissionId }) {
   const [preliminaryState, setPreliminaryState] = useState(null);
   const [conceptsState, setConceptsState] = useState(null);
   const [examplesState, setExamplesState] = useState(null);
   const [examplesFeelingsState, setExamplesFeelingsState] = useState(null);
+  const scoresRef = useRef({ preliminary: null, concepts: null, examples: null, feelings: null });
 
   const [debugOpen, setDebugOpen] = useState(true);
   const [survey] = useState(() => new Model(model));
+  const qBuf = useRef([]);
 
   useEffect(() => {
     const converter = MarkdownIt({
@@ -104,8 +106,32 @@ export default function SurveyComponent() {
       });
     });
 
+    const RESULT_PAGES = new Set(['No Experience', 'Limited Experience', 'Refresher', 'Advanced', 'Thank You']);
+
     survey.onValueChanged.add(saveData);
     survey.onUIStateChanged.add(saveData);
+
+    survey.onCurrentPageChanged.add(async (_, options) => {
+      const pageName = options.newCurrentPage?.name;
+      if (!RESULT_PAGES.has(pageName)) return;
+      if (!submissionId) return;
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      try {
+        await fetch(`${apiUrl}/collect/${submissionId}`, {
+          method: 'PATCH',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            preliminary: scoresRef.current.preliminary,
+            concepts: scoresRef.current.concepts,
+            examples: scoresRef.current.examples,
+            feelings: scoresRef.current.feelings,
+            resultPage: pageName,
+          }),
+        });
+      } catch {
+        // fire-and-forget: user already has their result on screen
+      }
+    });
 
     window.survey = survey;
 
@@ -150,6 +176,7 @@ export default function SurveyComponent() {
     }
 
     setPreliminaryState(state);
+    scoresRef.current.preliminary = state;
     return state;
   }
 
@@ -231,6 +258,7 @@ export default function SurveyComponent() {
     });
 
     setConceptsState(score);
+    scoresRef.current.concepts = score;
     return score;
   }
 
@@ -287,6 +315,7 @@ export default function SurveyComponent() {
     });
 
     setExamplesState(score);
+    scoresRef.current.examples = score;
     return score;
   }
 
@@ -296,6 +325,7 @@ export default function SurveyComponent() {
     console.log(data)
     const score = data.reduce((sum, v) => sum + (v && Number(v.split(":")[1]) || 0), 0);
     setExamplesFeelingsState(score);
+    scoresRef.current.feelings = score;
     return score;
   }
 
@@ -468,6 +498,23 @@ export default function SurveyComponent() {
       survey.uiState = state;
     }
   }
+
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key !== 'q') { qBuf.current = []; return; }
+      const now = Date.now();
+      qBuf.current = [...qBuf.current.filter(t => now - t < 500), now];
+      if (qBuf.current.length >= 3) {
+        qBuf.current = [];
+        const pages = survey.pages;
+        const currentIdx = pages.findIndex(p => p === survey.currentPage);
+        const nextIdx = (currentIdx + 1) % pages.length;
+        jumpToPage(pages[nextIdx].name);
+      }
+    };
+    document.addEventListener('keydown', handleKey);
+    return () => document.removeEventListener('keydown', handleKey);
+  }, []);
 
   const isDev = false; //process.env.NODE_ENV === 'development' && process.env.CI !== 'true';
 

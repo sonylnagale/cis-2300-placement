@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+import * as cdk from 'aws-cdk-lib/core';
+import { InfraStack } from '../lib/infra-stack';
+
+const app = new cdk.App();
+
+const domainName = app.node.tryGetContext('domainName') as string | undefined;
+const zoneName   = app.node.tryGetContext('zoneName')   as string | undefined;
+
+new InfraStack(app, 'InfraStack', {
+  env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
+  domainName,
+  zoneName,
+});

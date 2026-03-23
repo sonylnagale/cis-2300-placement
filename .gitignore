@@ -1,7 +1,8 @@
+
+.next
 node_modules
 out
 
-# amplify
-.amplify
-amplify_outputs*
-amplifyconfiguration*
+.env*
+cdk.out
+__*
